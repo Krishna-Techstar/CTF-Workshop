@@ -116,7 +116,7 @@ export default function FlagChecker() {
               type="text"
               value={inputFlag}
               onChange={(e) => setInputFlag(e.target.value)}
-              placeholder="Paste flag here, e.g. flag{base64_is_not_encryption}"
+              placeholder="Paste flag here, e.g. flag{...}"
               className={`brutal-input w-full font-mono text-sm sm:text-base py-3 px-4 ${
                 status === 'error' ? 'border-red-600 ring-4 ring-red-400 animate-shake' : ''
               }`}

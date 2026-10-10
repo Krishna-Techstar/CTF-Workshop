@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { IS_PARTICIPANT } from '../utils/mode';
-import { getAnswer } from '../utils/answerResolver';
+import { getAnswer, subscribeAnswers } from '../utils/answerResolver';
 
 export default function FlagBadge({ id, label = "Flag" }) {
   const [flagText, setFlagText] = useState(() => getAnswer(id));
 
   useEffect(() => {
-    if (!IS_PARTICIPANT && !flagText) {
-      // Allow dynamic import to settle if it was just loaded
-      const timer = setTimeout(() => {
+    if (!IS_PARTICIPANT) {
+      setFlagText(getAnswer(id));
+      return subscribeAnswers(() => {
         setFlagText(getAnswer(id));
-      }, 50);
-      return () => clearTimeout(timer);
+      });
     }
-  }, [id, flagText]);
+  }, [id]);
 
   if (IS_PARTICIPANT) {
     return (
@@ -34,7 +33,7 @@ export default function FlagBadge({ id, label = "Flag" }) {
         {label}:
       </span>
       <code className="font-mono font-bold text-xs sm:text-sm text-emerald-800 dark:text-emerald-300">
-        {flagText || `flag{${id}}`}
+        {flagText || 'flag{...}'}
       </code>
     </div>
   );

@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Copy, Check, AlertCircle } from 'lucide-react';
+import { IS_PARTICIPANT } from '../utils/mode';
+import { resolveFlagPlaceholder, subscribeAnswers } from '../utils/answerResolver';
 
 export default function CodeBlock({ code, language = 'bash', title = '' }) {
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  const [, setAnswersTick] = useState(0);
+
+  useEffect(() => {
+    if (!IS_PARTICIPANT) {
+      return subscribeAnswers(() => {
+        setAnswersTick(t => t + 1);
+      });
+    }
+  }, []);
+
+  const displayCode = typeof code === 'string'
+    ? code.replace(/{{flag:([a-zA-Z0-9_-]+)}}/g, (_, id) => resolveFlagPlaceholder(id))
+    : code;
 
   const handleCopy = async () => {
     setCopyFailed(false);
@@ -12,7 +27,7 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
     // Try modern Clipboard API
     if (navigator?.clipboard?.writeText) {
       try {
-        await navigator.clipboard.writeText(code);
+        await navigator.clipboard.writeText(displayCode);
         success = true;
       } catch (err) {
         success = false;
@@ -23,7 +38,7 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
     if (!success) {
       try {
         const textArea = document.createElement('textarea');
-        textArea.value = code;
+        textArea.value = displayCode;
         textArea.style.position = 'fixed';
         textArea.style.left = '-999999px';
         textArea.style.top = '-999999px';
@@ -60,11 +75,7 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
         return 'bg-brutal-yellow text-black';
       case 'python':
       case 'py':
-        return 'bg-brutal-blue text-black';
-      case 'html':
-        return 'bg-brutal-orange text-black';
-      case 'css':
-        return 'bg-brutal-pink text-black';
+        return 'bg-brutal-blue text-white';
       case 'markdown':
       case 'md':
         return 'bg-amber-300 text-black';
@@ -129,7 +140,7 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
       {/* Code Area */}
       <div className="p-4 overflow-x-auto text-sm font-mono leading-relaxed selection:bg-brutal-yellow selection:text-black">
         <pre className="m-0 text-neutral-100 whitespace-pre">
-          <code>{code}</code>
+          <code>{displayCode}</code>
         </pre>
       </div>
     </div>

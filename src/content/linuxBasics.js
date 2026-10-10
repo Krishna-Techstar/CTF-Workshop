@@ -37,9 +37,9 @@ export const linuxBasicsContent = {
 cd ~/ctf-lab
 echo "Nothing useful here." > docs/readme.txt
 echo "Shopping list: milk, eggs" > notes/todo.txt
-echo "flag{ls_dash_a_shows_hidden}" > .hidden/.secret.txt
+echo "{{flag:linux-hidden}}" > .hidden/.secret.txt
 for i in 1 2 3 4 5; do echo "INFO line $i ok"; done > logs/app.log
-echo "ERROR user=admin token=flag{grep_finds_needles}" >> logs/app.log
+echo "ERROR user=admin token={{flag:linux-grep}}" >> logs/app.log
 for i in 6 7 8; do echo "INFO line $i ok"; done >> logs/app.log
 cd ~`,
     note: "Share these lines on a slide or in chat so participants can paste the same block on their own laptops."

@@ -34,17 +34,17 @@ cp cat.jpg evidence.jpg
 exiftool -overwrite_original -Comment="ZmxhZ3tleGlmdG9vbF9yZWFkc19tZXRhZGF0YX0=" -Artist="Anonymous" evidence.jpg
 
 # Layer 2: plain text appended after the end of the image
-echo "flag{strings_finds_text}" >> evidence.jpg
+echo "{{flag:forensics-strings}}" >> evidence.jpg
 
 # Layer 3: a zip file appended after the image
-(echo "flag{binwalk_finds_hidden_files}"; for i in $(seq 1 200); do echo "padding line $i of harmless text"; done) > secret.txt
+(echo "{{flag:forensics-binwalk}}"; for i in $(seq 1 200); do echo "padding line $i of harmless text"; done) > secret.txt
 zip -q -9 secret.zip secret.txt
 cat secret.zip >> evidence.jpg
 rm secret.txt secret.zip
 
 # stego.jpg hides a file inside the image data with an empty password
 cp cat.jpg stego.jpg
-echo "flag{steghide_hides_data_inside}" > hidden.txt
+echo "{{flag:forensics-steghide}}" > hidden.txt
 steghide embed -cf stego.jpg -ef hidden.txt -p ""
 rm hidden.txt`,
     verification: "Check that both images still open normally in Windows (`explorer.exe .` then double-click). They should look like the original photo. Then test every command in this section once yourself. If steghide embed says the cover file is too short, use a larger photo."

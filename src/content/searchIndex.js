@@ -72,28 +72,28 @@ export const SEARCH_INDEX = [
     path: "/demo-1",
     anchor: "part-1-base64",
     section: "Demo 1: Crypto",
-    content: "ZmxhZ3tiYXNlNjRfaXNfbm90X2VuY3J5cHRpb259 From Base64 flag{base64_is_not_encryption} echo -n 'Man' | base64 echo base64 -d python3 base64.b64decode."
+    content: "ZmxhZ3tiYXNlNjRfaXNfbm90X2VuY3J5cHRpb259 From Base64 flag{...} echo -n 'Man' | base64 echo base64 -d python3 base64.b64decode."
   },
   {
     title: "Demo 1: ROT13 & Caesar Cipher",
     path: "/demo-1",
     anchor: "part-2-rot13",
     section: "Demo 1: Crypto",
-    content: "synt{ebg13_vf_whfg_n_fuvsg} flag{rot13_is_just_a_shift} ROT13 Brute Force tr 'A-Za-z' 'N-ZA-Mn-za-m'."
+    content: "synt{ebg13_vf_whfg_n_fuvsg} flag{...} ROT13 Brute Force tr 'A-Za-z' 'N-ZA-Mn-za-m'."
   },
   {
     title: "Demo 1: Hexadecimal Stream",
     path: "/demo-1",
     anchor: "part-3-hex",
     section: "Demo 1: Crypto",
-    content: "666c61677b6865785f69735f6a7573745f62797465737d From Hex flag{hex_is_just_bytes} xxd -r -p xxd -p."
+    content: "666c61677b6865785f69735f6a7573745f62797465737d From Hex flag{...} xxd -r -p xxd -p."
   },
   {
     title: "Demo 1: Layered Challenge & Magic Operation",
     path: "/demo-1",
     anchor: "part-4-layered",
     section: "Demo 1: Crypto",
-    content: "63336c7564487435626d78795a575a66596e4e66636d4677596e463259585239 Hex to Base64 to ROT13 flag{layers_of_encoding} CyberChef Magic heuristic."
+    content: "63336c7564487435626d78795a575a66596e4e66636d4677596e463259585239 Hex to Base64 to ROT13 flag{...} CyberChef Magic heuristic."
   },
 
   // Demo 2
@@ -102,7 +102,7 @@ export const SEARCH_INDEX = [
     path: "/demo-2",
     anchor: "step-2-view-source",
     section: "Demo 2: Web",
-    content: "HTML comments, style.css, app.js, flag{view_source_and_devtools} Ctrl+U View page source."
+    content: "HTML comments, style.css, app.js, flag{...} Ctrl+U View page source."
   },
   {
     title: "Demo 2: DevTools Tour (Elements, Console, Sources, Network, Application)",
@@ -116,14 +116,14 @@ export const SEARCH_INDEX = [
     path: "/demo-2",
     anchor: "step-4-cookies",
     section: "Demo 2: Web",
-    content: "admin=false to admin=true document.cookie = 'admin=true; path=/'; flag{cookie_monster} Application tab."
+    content: "admin=false to admin=true document.cookie = 'admin=true; path=/'; flag{...} Application tab."
   },
   {
     title: "Demo 2: robots.txt & Secret Directories",
     path: "/demo-2",
     anchor: "step-5-robots",
     section: "Demo 2: Web",
-    content: "Disallow: /secret/ flag{robots_reveal_secrets} /sitemap.xml /admin /login /backup /.git/ curl terminal requests."
+    content: "Disallow: /secret/ flag{...} /sitemap.xml /admin /login /backup /.git/ curl terminal requests."
   },
 
   // Demo 3
@@ -139,21 +139,21 @@ export const SEARCH_INDEX = [
     path: "/break-and-demo-3",
     anchor: "all-steps-detailed",
     section: "Demo 3: Forensics",
-    content: "file evidence.jpg, strings evidence.jpg | grep -i flag flag{strings_finds_text}, exiftool Comment base64 flag{exiftool_reads_metadata}."
+    content: "file evidence.jpg, strings evidence.jpg | grep -i flag flag{...}, exiftool Comment base64 flag{...}."
   },
   {
     title: "Demo 3: Binwalk & Embedded Archives",
     path: "/break-and-demo-3",
     anchor: "all-steps-detailed",
     section: "Demo 3: Forensics",
-    content: "binwalk evidence.jpg, binwalk -e evidence.jpg, secret.txt flag{binwalk_finds_hidden_files}, unzip evidence.jpg."
+    content: "binwalk evidence.jpg, binwalk -e evidence.jpg, secret.txt flag{...}, unzip evidence.jpg."
   },
   {
     title: "Demo 3: Hex View (xxd) and Steghide",
     path: "/break-and-demo-3",
     anchor: "all-steps-detailed",
     section: "Demo 3: Forensics",
-    content: "xxd evidence.jpg | head -3, steghide info stego.jpg, steghide extract -sf stego.jpg flag{steghide_hides_data_inside}."
+    content: "xxd evidence.jpg | head -3, steghide info stego.jpg, steghide extract -sf stego.jpg flag{...}."
   },
 
   // Linux Basics
@@ -169,7 +169,7 @@ export const SEARCH_INDEX = [
     path: "/linux-basics",
     anchor: "step-2-walkthrough",
     section: "Linux basics",
-    content: "~/ctf-lab .hidden/.secret.txt flag{ls_dash_a_shows_hidden}, logs/app.log flag{grep_finds_needles} find *.txt."
+    content: "~/ctf-lab .hidden/.secret.txt flag{...}, logs/app.log flag{...} find *.txt."
   },
   {
     title: "OverTheWire Bandit Wargame (Levels 0 to 5)",

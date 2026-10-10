@@ -48,7 +48,7 @@ return m ? m.split('=')[1] : null;
 }
 if (!getCookie('admin')) { document.cookie = 'admin=false; path=/'; }
 if (getCookie('admin') === 'true') {
-document.getElementById('msg').textContent = 'Welcome, admin! Secret code: flag{cookie_monster}';
+document.getElementById('msg').textContent = 'Welcome, admin! Secret code: {{flag:web-cookie}}';
 }
 EOF
 
@@ -59,7 +59,7 @@ EOF
 
 cat > secret/index.html <<'EOF'
 <h1>Secret Area</h1>
-<p>You found it with robots.txt. Flag: flag{robots_reveal_secrets}</p>
+<p>You found it with robots.txt. Flag: {{flag:web-robots}}</p>
 EOF`,
     runServerCommand: "python3 -m http.server 8765",
     serverInstructions: "The terminal will say \"Serving HTTP on 0.0.0.0 port 8765\". Leave it running. Open a browser on Windows and go to `http://localhost:8765` (if that fails, try `http://127.0.0.1:8765`). Stop the server later with `Ctrl + C`.",

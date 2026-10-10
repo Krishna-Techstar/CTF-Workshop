@@ -1,13 +1,26 @@
-import React from 'react';
-import { resolveFlagPlaceholder } from '../utils/answerResolver';
+import React, { useState, useEffect } from 'react';
+import { IS_PARTICIPANT } from '../utils/mode';
+import { resolveFlagPlaceholder, subscribeAnswers } from '../utils/answerResolver';
 
-export default function RichText({ children, className = '' }) {
-  if (typeof children !== 'string') {
-    return <span className={className}>{children}</span>;
+export default function RichText({ children, text, className = '' }) {
+  const [, setAnswersTick] = useState(0);
+
+  useEffect(() => {
+    if (!IS_PARTICIPANT) {
+      return subscribeAnswers(() => {
+        setAnswersTick(t => t + 1);
+      });
+    }
+  }, []);
+
+  const raw = text !== undefined ? text : children;
+
+  if (typeof raw !== 'string') {
+    return <span className={className}>{raw}</span>;
   }
 
   // Clean up stray spacing before punctuation while preserving code integrity
-  let cleaned = children
+  let cleaned = raw
     .replace(/\s+([.,;:!?])/g, '$1')
     .replace(/\(\s+/g, '(')
     .replace(/\s+\)/g, ')');
