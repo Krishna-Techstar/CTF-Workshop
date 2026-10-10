@@ -6,9 +6,10 @@ import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Sticker from '../components/Sticker';
 import RichText from '../components/RichText';
+import FlagBadge from '../components/FlagBadge';
 import InvestigationWorksheet from '../components/InvestigationWorksheet';
 import { demo3ForensicsContent } from '../content/demo3Forensics';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Coffee, Terminal } from 'lucide-react';
 
 export default function Demo3Forensics() {
   const [stepperIdx, setStepperIdx] = useState(0);

@@ -85,6 +85,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/before-you-start" element={<BeforeYouStart />} />
+            <Route path="/before-start" element={<Navigate to="/before-you-start" replace />} />
             <Route path="/method" element={<InvestigationMethod />} />
             <Route path="/method-examples" element={<MethodExamples />} />
             <Route path="/worksheet" element={<WorksheetPage />} />
@@ -92,6 +93,8 @@ export default function App() {
             <Route path="/demo-1" element={<Demo1Crypto />} />
             <Route path="/demo-2" element={<Demo2Web />} />
             <Route path="/break-and-demo-3" element={<Demo3Forensics />} />
+            <Route path="/demo-3" element={<Navigate to="/break-and-demo-3" replace />} />
+            <Route path="/forensics" element={<Navigate to="/break-and-demo-3" replace />} />
             <Route path="/linux-basics" element={<LinuxBasics />} />
             <Route path="/mini-ctf" element={<MiniCtfWrapUp />} />
             <Route path="*" element={<Navigate to="/" replace />} />

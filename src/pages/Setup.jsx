@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
 import Accordion from '../components/Accordion';
 import CodeBlock from '../components/CodeBlock';
+import StepCard from '../components/StepCard';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import RichText from '../components/RichText';

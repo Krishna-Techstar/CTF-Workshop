@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Flag } from 'lucide-react';
+import { ArrowRight, Flag, ShieldAlert } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import Accordion from '../components/Accordion';
 import TaskList from '../components/TaskList';
