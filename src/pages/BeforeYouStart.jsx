@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Flag } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import Accordion from '../components/Accordion';
 import TaskList from '../components/TaskList';
@@ -146,6 +148,28 @@ export default function BeforeYouStart() {
           </div>
         </div>
       </Accordion>
+
+      {/* Callout to Investigation Method */}
+      <div className="my-8 p-5 bg-brutal-orange/20 dark:bg-brutal-orange/25 border-3 border-black dark:border-white shadow-brutal dark:shadow-brutal-dark flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 block mb-1">
+            Core Process
+          </span>
+          <h4 className="font-heading font-extrabold text-base sm:text-lg text-black dark:text-white">
+            Before you touch any tool: the 5 questions.
+          </h4>
+          <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 font-sans mt-0.5">
+            Learn the repeatable thinking framework used by competitive CTF players.
+          </p>
+        </div>
+        <Link
+          to="/method"
+          className="inline-flex items-center gap-2 px-4 py-2 font-display font-extrabold text-xs sm:text-sm uppercase tracking-wide bg-brutal-orange text-black border-2 border-black dark:border-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all shrink-0"
+        >
+          <span>Learn the Method</span>
+          <ArrowRight className="w-4 h-4 stroke-[3]" />
+        </Link>
+      </div>
 
       <PageNav
         prev={{ label: "Home Overview", path: "/" }}

@@ -6,6 +6,7 @@ import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import FlagChecker from '../components/FlagChecker';
 import RichText from '../components/RichText';
+import InvestigationWorksheet from '../components/InvestigationWorksheet';
 import { miniCtfContent } from '../content/miniCtf';
 import { Search } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export default function MiniCtfWrapUp() {
     cheatSheet: true,
     troubleshooting: true,
     sources: true,
+    teamWorksheet: true,
   });
 
   const handleExpandAll = () => {
@@ -279,6 +281,22 @@ export default function MiniCtfWrapUp() {
       >
         <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-900 text-sm leading-relaxed">
           <RichText text={miniCtfContent.sources.text} />
+        </div>
+      </Accordion>
+
+      {/* Team Worksheet Accordion */}
+      <Accordion
+        id="team-worksheet"
+        badge="METHOD"
+        title="Team worksheet"
+        isOpen={openSections.teamWorksheet}
+        onToggle={(state) => setOpenSections(prev => ({ ...prev, teamWorksheet: state }))}
+      >
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base font-sans font-medium text-black dark:text-neutral-100 leading-relaxed">
+            Fill in one worksheet per solved challenge.
+          </p>
+          <InvestigationWorksheet storageId="minictf" compact={true} />
         </div>
       </Accordion>
 

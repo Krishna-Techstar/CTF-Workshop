@@ -6,6 +6,7 @@ import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Sticker from '../components/Sticker';
 import RichText from '../components/RichText';
+import InvestigationWorksheet from '../components/InvestigationWorksheet';
 import { demo3ForensicsContent } from '../content/demo3Forensics';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export default function Demo3Forensics() {
     allSteps: true,
     summaryTable: true,
     picoCtf: true,
+    tryProcess: true,
   });
 
   const handleExpandAll = () => {
@@ -357,6 +359,22 @@ export default function Demo3Forensics() {
         <p className="text-sm leading-relaxed m-0">
           <RichText>{demo3ForensicsContent.picoCtfPractice.text}</RichText>
         </p>
+      </Accordion>
+
+      {/* Try the Process Worksheet */}
+      <Accordion
+        id="demo3-try-the-process"
+        badge="PROCESS"
+        title="Try the process"
+        isOpen={openSections.tryProcess}
+        onToggle={(state) => setOpenSections(prev => ({ ...prev, tryProcess: state }))}
+      >
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base font-sans font-medium text-black dark:text-neutral-100 leading-relaxed">
+            Before you use any tool, answer the five questions.
+          </p>
+          <InvestigationWorksheet storageId="demo3" compact={true} />
+        </div>
       </Accordion>
 
       <PageNav

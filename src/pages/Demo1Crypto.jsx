@@ -7,6 +7,7 @@ import PageNav from '../components/PageNav';
 import Playground from '../components/Playground';
 import RichText from '../components/RichText';
 import FlagBadge from '../components/FlagBadge';
+import InvestigationWorksheet from '../components/InvestigationWorksheet';
 import { demo1CryptoContent } from '../content/demo1Crypto';
 
 export default function Demo1Crypto() {
@@ -19,6 +20,7 @@ export default function Demo1Crypto() {
     shortcut: true,
     boardFlow: true,
     picoCtf: true,
+    tryProcess: true,
   });
 
   const handleExpandAll = () => {
@@ -340,6 +342,22 @@ export default function Demo1Crypto() {
         <p className="text-sm leading-relaxed m-0">
           <RichText>{demo1CryptoContent.picoCtfPractice.text}</RichText>
         </p>
+      </Accordion>
+
+      {/* Try the Process Worksheet */}
+      <Accordion
+        id="demo1-try-the-process"
+        badge="PROCESS"
+        title="Try the process"
+        isOpen={openSections.tryProcess}
+        onToggle={(state) => setOpenSections(prev => ({ ...prev, tryProcess: state }))}
+      >
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base font-sans font-medium text-black dark:text-neutral-100 leading-relaxed">
+            Before you use any tool, answer the five questions.
+          </p>
+          <InvestigationWorksheet storageId="demo1" compact={true} />
+        </div>
       </Accordion>
 
       <PageNav
