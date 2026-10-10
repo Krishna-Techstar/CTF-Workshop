@@ -5,7 +5,7 @@ export const beforeYouStartContent = {
   time: "0:00 to 0:20",
   overview: "This guide covers every hands-on segment of your workshop in the order you will teach it, with the exact clicks, commands and expected results. Teach each demo in three beats: you show it, you do it together, they do it alone.",
   participantPrepTasks: [
-    "Create a free account on picoCTF (picoctf.org)",
+    "Create a free account on picoCTF (`picoctf.org`)",
     "Windows users: install WSL (Setup section, Part C). Mac and Linux users already have a terminal",
     "Bring a laptop, charger and a browser (Chrome or Firefox)"
   ],
@@ -23,6 +23,6 @@ export const beforeYouStartContent = {
   },
   flagFormat: {
     heading: "Flag format",
-    text: "Every demo flag in this guide looks like flag{...} . Real picoCTF flags look like picoCTF{...} . Tell participants to always copy the full string including the braces."
+    text: "Every demo flag in this guide looks like `flag{...}`. Real picoCTF flags look like `picoCTF{...}`. Tell participants to always copy the full string including the braces."
   }
 };

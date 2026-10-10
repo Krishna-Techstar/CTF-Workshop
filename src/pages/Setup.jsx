@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
 import Accordion from '../components/Accordion';
 import CodeBlock from '../components/CodeBlock';
 import StepCard from '../components/StepCard';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
-import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
 import { setupContent } from '../content/setup';
-import { Search, Monitor, Terminal, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function Setup() {
   const [activeOsTab, setActiveOsTab] = useState('windows'); // 'windows' | 'mac' | 'linux'
@@ -18,6 +18,26 @@ export default function Setup() {
     partC: true,
     troubleshooting: true,
   });
+
+  const tabListRef = useRef(null);
+  const osTabs = ['windows', 'mac', 'linux'];
+
+  const handleTabKeyDown = (e, currentTab) => {
+    const currentIndex = osTabs.indexOf(currentTab);
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % osTabs.length;
+      setActiveOsTab(osTabs[nextIndex]);
+      const nextBtn = tabListRef.current?.querySelectorAll('[role="tab"]')[nextIndex];
+      nextBtn?.focus();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIndex = (currentIndex - 1 + osTabs.length) % osTabs.length;
+      setActiveOsTab(osTabs[prevIndex]);
+      const prevBtn = tabListRef.current?.querySelectorAll('[role="tab"]')[prevIndex];
+      prevBtn?.focus();
+    }
+  };
 
   const handleExpandAll = () => {
     setOpenSections({ partA: true, partB: true, partC: true, troubleshooting: true });
@@ -48,7 +68,7 @@ export default function Setup() {
         tagText="SECTION 2"
       >
         <p className="font-bold text-base sm:text-lg mb-0 text-black">
-          {setupContent.overview}
+          <RichText>{setupContent.overview}</RichText>
         </p>
       </PageHeader>
 
@@ -70,14 +90,14 @@ export default function Setup() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {setupContent.partA.steps.map((st) => (
               <StepCard key={st.num} number={st.num} title={`Step ${st.num}`} accentColor="blue">
-                {st.text}
+                <RichText>{st.text}</RichText>
               </StepCard>
             ))}
           </div>
 
           <div className="p-4 border-3 border-black bg-cream dark:bg-neutral-900 shadow-brutal-sm text-sm font-mono">
             <span className="font-bold text-brutal-pink">⚡ Webshell Fallback: </span>
-            {setupContent.partA.note}
+            <RichText>{setupContent.partA.note}</RichText>
           </div>
         </div>
       </Accordion>
@@ -92,7 +112,7 @@ export default function Setup() {
       >
         <div className="space-y-4">
           <p className="text-sm sm:text-base leading-relaxed">
-            {setupContent.partB.intro}
+            <RichText>{setupContent.partB.intro}</RichText>
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -105,12 +125,12 @@ export default function Setup() {
                   <span>Step {st.num}</span>
                 </div>
                 <p className="text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 m-0">
-                  {st.text}
+                  <RichText>{st.text}</RichText>
                 </p>
                 {st.subitems && (
                   <ul className="mt-2 list-disc list-inside text-xs space-y-1 font-mono text-neutral-700 dark:text-neutral-300">
                     {st.subitems.map((sub, sIdx) => (
-                      <li key={sIdx}>{sub}</li>
+                      <li key={sIdx}><RichText>{sub}</RichText></li>
                     ))}
                   </ul>
                 )}
@@ -130,14 +150,25 @@ export default function Setup() {
       >
         <div className="space-y-6">
           <p className="text-sm sm:text-base leading-relaxed">
-            {setupContent.partC.intro}
+            <RichText>{setupContent.partC.intro}</RichText>
           </p>
 
           {/* OS Switcher Tabs */}
-          <div className="flex flex-wrap gap-2 pb-2 border-b-3 border-black dark:border-white select-none">
+          <div 
+            ref={tabListRef}
+            role="tablist"
+            aria-label="Operating System terminal setup tabs"
+            className="flex flex-wrap gap-2 pb-2 border-b-3 border-black dark:border-white select-none"
+          >
             <button
               type="button"
+              role="tab"
+              id="os-tab-windows"
+              aria-controls="os-panel-windows"
+              aria-selected={activeOsTab === 'windows'}
+              tabIndex={activeOsTab === 'windows' ? 0 : -1}
               onClick={() => setActiveOsTab('windows')}
+              onKeyDown={(e) => handleTabKeyDown(e, 'windows')}
               className={`px-4 py-2 font-heading text-xs sm:text-sm uppercase tracking-wide border-3 border-black dark:border-white transition-all ${
                 activeOsTab === 'windows'
                   ? 'bg-brutal-yellow text-black shadow-brutal -translate-y-0.5'
@@ -148,7 +179,13 @@ export default function Setup() {
             </button>
             <button
               type="button"
+              role="tab"
+              id="os-tab-mac"
+              aria-controls="os-panel-mac"
+              aria-selected={activeOsTab === 'mac'}
+              tabIndex={activeOsTab === 'mac' ? 0 : -1}
               onClick={() => setActiveOsTab('mac')}
+              onKeyDown={(e) => handleTabKeyDown(e, 'mac')}
               className={`px-4 py-2 font-heading text-xs sm:text-sm uppercase tracking-wide border-3 border-black dark:border-white transition-all ${
                 activeOsTab === 'mac'
                   ? 'bg-brutal-pink text-black shadow-brutal -translate-y-0.5'
@@ -159,7 +196,13 @@ export default function Setup() {
             </button>
             <button
               type="button"
+              role="tab"
+              id="os-tab-linux"
+              aria-controls="os-panel-linux"
+              aria-selected={activeOsTab === 'linux'}
+              tabIndex={activeOsTab === 'linux' ? 0 : -1}
               onClick={() => setActiveOsTab('linux')}
+              onKeyDown={(e) => handleTabKeyDown(e, 'linux')}
               className={`px-4 py-2 font-heading text-xs sm:text-sm uppercase tracking-wide border-3 border-black dark:border-white transition-all ${
                 activeOsTab === 'linux'
                   ? 'bg-brutal-green text-black shadow-brutal -translate-y-0.5'
@@ -172,7 +215,7 @@ export default function Setup() {
 
           {/* Tab 1: Windows WSL Content */}
           {activeOsTab === 'windows' && (
-            <div className="space-y-4">
+            <div id="os-panel-windows" role="tabpanel" aria-labelledby="os-tab-windows" className="space-y-4">
               <div className="p-3 bg-yellow-100 dark:bg-yellow-950/40 border-2 border-black text-xs font-mono font-bold">
                 Target: Windows 10 version 2004+ (build 19041+) or Windows 11. Needs Admin rights.
               </div>
@@ -187,7 +230,7 @@ export default function Setup() {
                       <span>Step {st.num}</span>
                     </div>
                     <p className="text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 m-0">
-                      {st.text}
+                      <RichText>{st.text}</RichText>
                     </p>
                     {st.command && (
                       <CodeBlock code={st.command} language={st.language || 'bash'} />
@@ -203,7 +246,7 @@ export default function Setup() {
                 </h4>
                 <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
                   {setupContent.partC.tips.map((tip, tIdx) => (
-                    <li key={tIdx}>{tip}</li>
+                    <li key={tIdx}><RichText>{tip}</RichText></li>
                   ))}
                 </ul>
               </div>
@@ -212,7 +255,7 @@ export default function Setup() {
 
           {/* Tab 2: macOS Content */}
           {activeOsTab === 'mac' && (
-            <div className="space-y-4">
+            <div id="os-panel-mac" role="tabpanel" aria-labelledby="os-tab-mac" className="space-y-4">
               <div className="p-4 border-3 border-black bg-white dark:bg-neutral-900 shadow-brutal-sm">
                 <h4 className="font-heading text-base mb-2">macOS Terminal & Homebrew</h4>
                 <p className="text-sm leading-relaxed mb-3">
@@ -223,16 +266,23 @@ export default function Setup() {
                   language="bash"
                   title="macOS Homebrew Install"
                 />
-                <div className="p-3 border-2 border-black bg-yellow-100 dark:bg-yellow-950/40 text-xs font-mono">
-                  <strong>Notice on steghide:</strong> Steghide is not reliably available on Mac, so Mac users can follow that one demo on a neighbour's screen or in the picoCTF webshell.
+                <div className="p-3 border-2 border-black bg-yellow-100 dark:bg-yellow-950/40 text-xs font-mono mb-4">
+                  <strong>Notice on steghide:</strong> Steghide is not reliably available on Mac, so Mac users can follow that one demo on a neighbour&apos;s screen or in the picoCTF webshell.
                 </div>
+
+                <h5 className="font-heading text-xs uppercase mb-1">Verify installed tools on macOS:</h5>
+                <CodeBlock
+                  code={setupContent.partC.verifyCommand}
+                  language="bash"
+                  title="Verify Tools (macOS)"
+                />
               </div>
             </div>
           )}
 
           {/* Tab 3: Linux Content */}
           {activeOsTab === 'linux' && (
-            <div className="space-y-4">
+            <div id="os-panel-linux" role="tabpanel" aria-labelledby="os-tab-linux" className="space-y-4">
               <div className="p-4 border-3 border-black bg-white dark:bg-neutral-900 shadow-brutal-sm">
                 <h4 className="font-heading text-base mb-2">Native Ubuntu / Debian Terminal</h4>
                 <p className="text-sm leading-relaxed mb-3">
@@ -243,13 +293,20 @@ export default function Setup() {
                   language="bash"
                   title="Linux APT Install"
                 />
+
+                <h5 className="font-heading text-xs uppercase mb-1 mt-4">Verify installed tools on Linux:</h5>
+                <CodeBlock
+                  code={setupContent.partC.verifyCommand}
+                  language="bash"
+                  title="Verify Tools (Linux)"
+                />
               </div>
             </div>
           )}
 
           {/* OverTheWire Bandit note */}
           <div className="p-3 bg-neutral-100 dark:bg-neutral-800 border-2 border-black dark:border-white text-xs font-mono">
-            💡 {setupContent.partC.banditFallback}
+            💡 <RichText>{setupContent.partC.banditFallback}</RichText>
           </div>
         </div>
       </Accordion>
@@ -306,10 +363,10 @@ export default function Setup() {
                   filteredTroubleshooting.map((item, idx) => (
                     <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                       <td className="p-3 font-mono font-bold text-red-600 dark:text-red-400 border-r-2 border-black dark:border-white">
-                        {item.problem}
+                        <RichText>{item.problem}</RichText>
                       </td>
                       <td className="p-3 text-neutral-800 dark:text-neutral-200">
-                        {item.fix}
+                        <RichText>{item.fix}</RichText>
                       </td>
                     </tr>
                   ))

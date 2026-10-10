@@ -1,0 +1,15 @@
+export const ANSWERS = {
+  'crypto-base64': 'flag{base64_is_not_encryption}',
+  'crypto-rot13': 'flag{rot13_is_just_a_shift}',
+  'crypto-hex': 'flag{hex_is_just_bytes}',
+  'crypto-layered': 'flag{layers_of_encoding}',
+  'web-viewsource': 'flag{view_source_and_devtools}',
+  'web-cookie': 'flag{cookie_monster}',
+  'web-robots': 'flag{robots_reveal_secrets}',
+  'forensics-strings': 'flag{strings_finds_text}',
+  'forensics-exiftool': 'flag{exiftool_reads_metadata}',
+  'forensics-binwalk': 'flag{binwalk_finds_hidden_files}',
+  'forensics-steghide': 'flag{steghide_hides_data_inside}',
+  'linux-hidden': 'flag{ls_dash_a_shows_hidden}',
+  'linux-grep': 'flag{grep_finds_needles}',
+};

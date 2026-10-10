@@ -1,16 +1,48 @@
 import React, { useState } from 'react';
-import { Copy, Check, Terminal } from 'lucide-react';
+import { Copy, Check, AlertCircle } from 'lucide-react';
 
 export default function CodeBlock({ code, language = 'bash', title = '' }) {
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
+    setCopyFailed(false);
+    let success = false;
+
+    // Try modern Clipboard API
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(code);
+        success = true;
+      } catch (err) {
+        success = false;
+      }
+    }
+
+    // Fallback to execCommand('copy')
+    if (!success) {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = code;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        success = document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch (err) {
+        success = false;
+      }
+    }
+
+    if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy code: ', err);
+    } else {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 3000);
     }
   };
 
@@ -20,6 +52,9 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
       case 'sh':
       case 'shell':
         return 'bg-brutal-green text-black';
+      case 'powershell':
+      case 'ps1':
+        return 'bg-cyan-300 text-black';
       case 'javascript':
       case 'js':
         return 'bg-brutal-yellow text-black';
@@ -30,6 +65,9 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
         return 'bg-brutal-orange text-black';
       case 'css':
         return 'bg-brutal-pink text-black';
+      case 'markdown':
+      case 'md':
+        return 'bg-amber-300 text-black';
       case 'output':
       case 'result':
         return 'bg-brutal-purple text-black';
@@ -60,10 +98,12 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
 
         <button
           onClick={handleCopy}
-          aria-label={copied ? "Code copied to clipboard" : "Copy code to clipboard"}
+          aria-label={copied ? "Code copied to clipboard" : copyFailed ? "Copy failed" : "Copy code to clipboard"}
           className={`flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 py-1 border-2 border-black transition-all ${
             copied
               ? 'bg-brutal-green text-black translate-x-0.5 translate-y-0.5 shadow-none'
+              : copyFailed
+              ? 'bg-red-400 text-black'
               : 'bg-white text-black hover:bg-brutal-yellow shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none'
           }`}
         >
@@ -71,6 +111,11 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
             <>
               <Check className="w-3.5 h-3.5 stroke-[3]" />
               <span>COPIED!</span>
+            </>
+          ) : copyFailed ? (
+            <>
+              <AlertCircle className="w-3.5 h-3.5" />
+              <span>Copy failed, select text manually</span>
             </>
           ) : (
             <>

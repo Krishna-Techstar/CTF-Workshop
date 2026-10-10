@@ -5,8 +5,9 @@ import CodeBlock from '../components/CodeBlock';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
+import FlagBadge from '../components/FlagBadge';
 import { demo2WebContent } from '../content/demo2Web';
-import { Globe, Code2, Cookie, Eye, Terminal, FileText, CheckCircle2 } from 'lucide-react';
 
 export default function Demo2Web() {
   const [activeDevTab, setActiveDevTab] = useState('Elements');
@@ -45,6 +46,7 @@ export default function Demo2Web() {
     { id: 'step-5-robots', label: 'Step 5: robots.txt' },
     { id: 'bonus-curl', label: 'Bonus: curl Terminal' },
     { id: 'board-flow-web', label: 'Board Solving Flow' },
+    { id: 'picoctf-web-practice', label: 'Practice on picoCTF' },
   ];
 
   return (
@@ -56,7 +58,7 @@ export default function Demo2Web() {
         tagText="DEMO 2: WEB"
       >
         <p className="font-bold text-base sm:text-lg mb-0 text-black">
-          Goal: {demo2WebContent.goal}
+          Goal: <RichText>{demo2WebContent.goal}</RichText>
         </p>
       </PageHeader>
 
@@ -78,14 +80,14 @@ export default function Demo2Web() {
           <div className="space-y-2">
             {demo2WebContent.step0.flow.map((item, idx) => (
               <div key={idx} className="p-3 border-2 border-black dark:border-white bg-white dark:bg-neutral-900 font-mono text-xs sm:text-sm">
-                {item}
+                <RichText>{item}</RichText>
               </div>
             ))}
           </div>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs sm:text-sm leading-relaxed">
             <span className="font-heading uppercase text-xs text-brutal-pink block mb-1">COOKIE ANATOMY:</span>
-            {demo2WebContent.step0.cookieExplanation}
+            <RichText>{demo2WebContent.step0.cookieExplanation}</RichText>
           </div>
         </div>
       </Accordion>
@@ -99,7 +101,7 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step1: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{demo2WebContent.step1.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo2WebContent.step1.intro}</RichText></p>
           <CodeBlock
             code={demo2WebContent.step1.script}
             language="bash"
@@ -114,7 +116,7 @@ export default function Demo2Web() {
               title="Python HTTP Server"
             />
             <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-1">
-              {demo2WebContent.step1.serverInstructions}
+              <RichText>{demo2WebContent.step1.serverInstructions}</RichText>
             </p>
           </div>
 
@@ -133,14 +135,14 @@ export default function Demo2Web() {
                 <tbody className="divide-y-2 divide-neutral-200 dark:divide-neutral-800 font-mono">
                   {demo2WebContent.step1.hiddenFlagsTable.map((f, idx) => (
                     <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
-                      <td className="p-3 font-bold text-emerald-700 dark:text-emerald-400 border-r-2 border-black dark:border-white">
-                        {f.flag}
+                      <td className="p-3 font-bold border-r-2 border-black dark:border-white">
+                        <RichText>{f.flagPlaceholder}</RichText>
                       </td>
                       <td className="p-3 text-neutral-800 dark:text-neutral-200 border-r-2 border-black dark:border-white">
-                        {f.where}
+                        <RichText>{f.where}</RichText>
                       </td>
                       <td className="p-3 font-bold text-black dark:text-white">
-                        {f.technique}
+                        <RichText>{f.technique}</RichText>
                       </td>
                     </tr>
                   ))}
@@ -160,22 +162,24 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step2: state }))}
       >
         <div className="space-y-4">
-          <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-neutral-900 space-y-2">
+          <ol className="list-decimal list-inside p-4 border-2 border-black dark:border-white bg-white dark:bg-neutral-900 space-y-2 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
             {demo2WebContent.step2.steps.map((st, idx) => (
-              <div key={idx} className="text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
-                {st}
-              </div>
+              <li key={idx} className="leading-relaxed">
+                <RichText>{st}</RichText>
+              </li>
             ))}
-          </div>
+          </ol>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs sm:text-sm leading-relaxed">
             <span className="font-heading uppercase text-xs text-brutal-pink block mb-1">CORE LESSON:</span>
-            {demo2WebContent.step2.lesson}
+            <RichText>{demo2WebContent.step2.lesson}</RichText>
           </div>
+
+          <FlagBadge id="web-viewsource" label="Demo 2 Flag #1" />
         </div>
       </Accordion>
 
-      {/* Step 3: DevTools tour, tab by tab (Interactive Tab Highlighter!) */}
+      {/* Step 3: DevTools tour, tab by tab */}
       <Accordion
         id="step-3-devtools-tour"
         badge="STEP 3"
@@ -184,18 +188,19 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step3: state }))}
       >
         <div className="space-y-5">
-          <p className="text-sm leading-relaxed">{demo2WebContent.step3.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo2WebContent.step3.intro}</RichText></p>
 
           {/* Interactive DevTools Cheat Selector Buttons */}
           <div className="p-3 bg-neutral-100 dark:bg-neutral-800 border-3 border-black dark:border-white">
             <div className="text-xs font-mono font-bold uppercase mb-2 text-neutral-600 dark:text-neutral-300">
-              Interactive DevTools Tab Navigator (Click a tab to highlight):
+              Interactive DevTools Tab Navigator (Click or press Enter on a tab to highlight):
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" role="group" aria-label="DevTools Tab Selector">
               {demo2WebContent.step3.devToolsTabs.map((tab) => (
                 <button
                   key={tab.name}
                   type="button"
+                  aria-pressed={activeDevTab === tab.name}
                   onClick={() => setActiveDevTab(tab.name)}
                   className={`px-3 py-1.5 font-heading text-xs uppercase tracking-wide border-2 border-black dark:border-white transition-all ${
                     activeDevTab === tab.name
@@ -216,11 +221,20 @@ export default function Demo2Web() {
               return (
                 <div
                   key={tab.name}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isSelected}
                   onClick={() => setActiveDevTab(tab.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveDevTab(tab.name);
+                    }
+                  }}
                   className={`p-4 border-3 border-black dark:border-white transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-yellow-50 dark:bg-yellow-950/40 shadow-brutal ring-4 ring-brutal-yellow scale-[1.01]'
-                      : 'bg-white dark:bg-neutral-900 shadow-brutal-sm opacity-90'
+                      : 'bg-white dark:bg-neutral-900 shadow-brutal-sm opacity-90 hover:opacity-100'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -232,10 +246,10 @@ export default function Demo2Web() {
                     )}
                   </div>
                   <div className="text-xs font-mono font-bold text-neutral-600 dark:text-neutral-400 mb-2">
-                    What it shows: <span className="text-black dark:text-white font-normal">{tab.shows}</span>
+                    What it shows: <span className="text-black dark:text-white font-normal"><RichText>{tab.shows}</RichText></span>
                   </div>
                   <div className="text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200 bg-white dark:bg-black p-2.5 border border-black dark:border-white/40">
-                    <strong>In Demo: </strong>{tab.whatToDo}
+                    <strong>In Demo: </strong><RichText>{tab.whatToDo}</RichText>
                   </div>
                 </div>
               );
@@ -249,7 +263,7 @@ export default function Demo2Web() {
             </h5>
             <ul className="list-disc list-inside space-y-1 font-mono text-neutral-800 dark:text-neutral-200">
               {demo2WebContent.step3.networkKeyPoints.map((pt, idx) => (
-                <li key={idx}>{pt}</li>
+                <li key={idx}><RichText>{pt}</RichText></li>
               ))}
             </ul>
           </div>
@@ -265,7 +279,7 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step4: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{demo2WebContent.step4.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo2WebContent.step4.intro}</RichText></p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Method 1 */}
@@ -275,7 +289,7 @@ export default function Demo2Web() {
               </h5>
               <ol className="list-decimal list-inside space-y-1 text-xs font-mono text-neutral-800 dark:text-neutral-200">
                 {demo2WebContent.step4.method1.steps.map((st, idx) => (
-                  <li key={idx}>{st}</li>
+                  <li key={idx}><RichText>{st}</RichText></li>
                 ))}
               </ol>
             </div>
@@ -290,13 +304,10 @@ export default function Demo2Web() {
           </div>
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono">
-            {demo2WebContent.step4.realWorldNote}
+            <RichText>{demo2WebContent.step4.realWorldNote}</RichText>
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 2 Flag #2:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo2WebContent.step4.flag}</code>
-          </div>
+          <FlagBadge id={demo2WebContent.step4.flagId} label="Demo 2 Flag #2" />
         </div>
       </Accordion>
 
@@ -309,22 +320,19 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step5: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{demo2WebContent.step5.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo2WebContent.step5.intro}</RichText></p>
 
           <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
             {demo2WebContent.step5.steps.map((st, idx) => (
-              <li key={idx}>{st}</li>
+              <li key={idx}><RichText>{st}</RichText></li>
             ))}
           </ol>
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono">
-            💡 {demo2WebContent.step5.commonPathsToTry}
+            💡 <RichText>{demo2WebContent.step5.commonPathsToTry}</RichText>
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 2 Flag #3:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo2WebContent.step5.flag}</code>
-          </div>
+          <FlagBadge id={demo2WebContent.step5.flagId} label="Demo 2 Flag #3" />
         </div>
       </Accordion>
 
@@ -337,7 +345,7 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, bonusCurl: state }))}
       >
         <div className="space-y-2">
-          <p className="text-sm leading-relaxed">{demo2WebContent.bonusCurl.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo2WebContent.bonusCurl.intro}</RichText></p>
           <CodeBlock code={demo2WebContent.bonusCurl.command} language="bash" title="Terminal cURL Commands" />
         </div>
       </Accordion>
@@ -353,7 +361,7 @@ export default function Demo2Web() {
         <div className="p-4 sm:p-5 border-3 border-black bg-neutral-900 text-neutral-100 font-mono text-xs sm:text-sm space-y-2">
           {demo2WebContent.boardFlow.steps.map((st, idx) => (
             <div key={idx} className="pb-1 border-b border-neutral-800 last:border-b-0">
-              {st}
+              <RichText>{st}</RichText>
             </div>
           ))}
         </div>
@@ -368,7 +376,7 @@ export default function Demo2Web() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, picoCtf: state }))}
       >
         <p className="text-sm leading-relaxed m-0">
-          {demo2WebContent.picoCtfPractice.text}
+          <RichText>{demo2WebContent.picoCtfPractice.text}</RichText>
         </p>
       </Accordion>
 

@@ -5,9 +5,9 @@ import CodeBlock from '../components/CodeBlock';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Playground from '../components/Playground';
-import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
+import FlagBadge from '../components/FlagBadge';
 import { demo1CryptoContent } from '../content/demo1Crypto';
-import { Lock, Key, Hash, Sparkles, Layers, Terminal } from 'lucide-react';
 
 export default function Demo1Crypto() {
   const [openSections, setOpenSections] = useState({
@@ -44,6 +44,7 @@ export default function Demo1Crypto() {
     { id: 'part-4-layered', label: 'Part 4: Layered' },
     { id: 'shortcut-magic', label: 'Magic Operation' },
     { id: 'board-solving-flow', label: 'Solving Flow' },
+    { id: 'picoctf-crypto-practice', label: 'Practice on picoCTF' },
   ];
 
   return (
@@ -55,7 +56,7 @@ export default function Demo1Crypto() {
         tagText="DEMO 1: CRYPTO"
       >
         <p className="font-bold text-base sm:text-lg mb-0 text-black">
-          Goal: {demo1CryptoContent.goal}
+          Goal: <RichText>{demo1CryptoContent.goal}</RichText>
         </p>
       </PageHeader>
 
@@ -93,16 +94,16 @@ export default function Demo1Crypto() {
                 {demo1CryptoContent.step0.table.map((row, idx) => (
                   <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                     <td className="p-3 font-heading text-black dark:text-white border-r-2 border-black dark:border-white">
-                      {row.idea}
+                      <RichText>{row.idea}</RichText>
                     </td>
                     <td className="p-3 font-mono font-bold border-r-2 border-black dark:border-white">
-                      {row.needsKey}
+                      <RichText>{row.needsKey}</RichText>
                     </td>
                     <td className="p-3 font-mono border-r-2 border-black dark:border-white">
-                      {row.reversible}
+                      <RichText>{row.reversible}</RichText>
                     </td>
                     <td className="p-3 font-mono text-neutral-700 dark:text-neutral-300">
-                      {row.examples}
+                      <RichText>{row.examples}</RichText>
                     </td>
                   </tr>
                 ))}
@@ -113,7 +114,7 @@ export default function Demo1Crypto() {
           <div className="p-4 border-3 border-black bg-cream dark:bg-neutral-800 text-black dark:text-white shadow-brutal-sm">
             <span className="font-heading text-sm text-brutal-pink block mb-1">KEY MESSAGE:</span>
             <p className="text-sm sm:text-base m-0 font-medium">
-              {demo1CryptoContent.step0.keyMessage}
+              <RichText>{demo1CryptoContent.step0.keyMessage}</RichText>
             </p>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function Demo1Crypto() {
         <div className="space-y-4">
           <div>
             <h4 className="font-heading text-base mb-1">How it works:</h4>
-            <p className="text-sm leading-relaxed">{demo1CryptoContent.part1.howItWorks}</p>
+            <p className="text-sm leading-relaxed"><RichText>{demo1CryptoContent.part1.howItWorks}</RichText></p>
           </div>
 
           {/* Worked example table */}
@@ -146,9 +147,9 @@ export default function Demo1Crypto() {
                 </thead>
                 <tbody className="divide-y border-black font-mono">
                   {demo1CryptoContent.part1.workedExample.steps.map((s, idx) => (
-                    <tr key={idx} className={idx === 5 ? 'bg-brutal-yellow/30 font-bold' : ''}>
-                      <td className="p-2.5 border-r border-black text-neutral-800 dark:text-neutral-200">{s.step}</td>
-                      <td className="p-2.5 font-bold text-black dark:text-white">{s.result}</td>
+                    <tr key={idx} className={idx === demo1CryptoContent.part1.workedExample.steps.length - 1 ? 'bg-brutal-yellow/30 font-bold' : ''}>
+                      <td className="p-2.5 border-r border-black text-neutral-800 dark:text-neutral-200"><RichText>{s.step}</RichText></td>
+                      <td className="p-2.5 font-bold text-black dark:text-white"><RichText>{s.result}</RichText></td>
                     </tr>
                   ))}
                 </tbody>
@@ -158,7 +159,7 @@ export default function Demo1Crypto() {
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-900 font-mono text-xs">
             <strong>How to recognise Base64: </strong>
-            {demo1CryptoContent.part1.recognition}
+            <RichText>{demo1CryptoContent.part1.recognition}</RichText>
           </div>
 
           {/* Decode in CyberChef */}
@@ -166,7 +167,7 @@ export default function Demo1Crypto() {
             <h5 className="font-heading text-sm uppercase mb-2">Decode in CyberChef:</h5>
             <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
               {demo1CryptoContent.part1.cyberChefSteps.map((st, idx) => (
-                <li key={idx}>{st}</li>
+                <li key={idx}><RichText>{st}</RichText></li>
               ))}
             </ol>
           </div>
@@ -176,7 +177,7 @@ export default function Demo1Crypto() {
             <h5 className="font-heading text-sm uppercase mb-1">Decode in the terminal (use -n so echo does not add a hidden newline):</h5>
             <CodeBlock code={demo1CryptoContent.part1.terminalCommand} language="bash" title="Terminal Base64" />
             <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-1">
-              {demo1CryptoContent.part1.terminalExplanation}
+              <RichText>{demo1CryptoContent.part1.terminalExplanation}</RichText>
             </p>
           </div>
 
@@ -186,10 +187,7 @@ export default function Demo1Crypto() {
             <CodeBlock code={demo1CryptoContent.part1.pythonVersion} language="python" title="Python 3 Base64" />
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 1 Flag #1:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo1CryptoContent.part1.flag}</code>
-          </div>
+          <FlagBadge id={demo1CryptoContent.part1.flagId} label="Demo 1 Flag #1" />
         </div>
       </Accordion>
 
@@ -202,18 +200,18 @@ export default function Demo1Crypto() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, part2: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed whitespace-pre-line">{demo1CryptoContent.part2.howItWorks}</p>
+          <p className="text-sm leading-relaxed whitespace-pre-line"><RichText>{demo1CryptoContent.part2.howItWorks}</RichText></p>
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-900 font-mono text-xs">
             <strong>How to recognise it: </strong>
-            {demo1CryptoContent.part2.recognition}
+            <RichText>{demo1CryptoContent.part2.recognition}</RichText>
           </div>
 
           <div>
             <h5 className="font-heading text-sm uppercase mb-2">Decode in CyberChef:</h5>
             <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
               {demo1CryptoContent.part2.cyberChefSteps.map((st, idx) => (
-                <li key={idx}>{st}</li>
+                <li key={idx}><RichText>{st}</RichText></li>
               ))}
             </ol>
           </div>
@@ -223,10 +221,7 @@ export default function Demo1Crypto() {
             <CodeBlock code={demo1CryptoContent.part2.terminalCommand} language="bash" title="Tr Command ROT13" />
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 1 Flag #2:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo1CryptoContent.part2.flag}</code>
-          </div>
+          <FlagBadge id={demo1CryptoContent.part2.flagId} label="Demo 1 Flag #2" />
         </div>
       </Accordion>
 
@@ -239,18 +234,18 @@ export default function Demo1Crypto() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, part3: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{demo1CryptoContent.part3.howItWorks}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo1CryptoContent.part3.howItWorks}</RichText></p>
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-900 font-mono text-xs">
             <strong>How to recognise it: </strong>
-            {demo1CryptoContent.part3.recognition}
+            <RichText>{demo1CryptoContent.part3.recognition}</RichText>
           </div>
 
           <div>
             <h5 className="font-heading text-sm uppercase mb-2">Decode in CyberChef:</h5>
             <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
               {demo1CryptoContent.part3.cyberChefSteps.map((st, idx) => (
-                <li key={idx}>{st}</li>
+                <li key={idx}><RichText>{st}</RichText></li>
               ))}
             </ol>
           </div>
@@ -259,14 +254,11 @@ export default function Demo1Crypto() {
             <h5 className="font-heading text-sm uppercase mb-1">Terminal version:</h5>
             <CodeBlock code={demo1CryptoContent.part3.terminalCommand} language="bash" title="xxd Hex Decode & Encode" />
             <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400 mt-1">
-              {demo1CryptoContent.part3.terminalExplanation}
+              <RichText>{demo1CryptoContent.part3.terminalExplanation}</RichText>
             </p>
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 1 Flag #3:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo1CryptoContent.part3.flag}</code>
-          </div>
+          <FlagBadge id={demo1CryptoContent.part3.flagId} label="Demo 1 Flag #3" />
         </div>
       </Accordion>
 
@@ -279,7 +271,7 @@ export default function Demo1Crypto() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, part4: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{demo1CryptoContent.part4.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo1CryptoContent.part4.intro}</RichText></p>
 
           <div className="p-3 border-2 border-black bg-neutral-900 text-green-400 font-mono text-xs sm:text-sm break-all">
             {demo1CryptoContent.part4.challengeString}
@@ -292,21 +284,18 @@ export default function Demo1Crypto() {
                   {lyr.step}
                 </span>
                 <div>
-                  <div className="font-heading text-xs uppercase text-black dark:text-white">{lyr.action}</div>
-                  <div className="font-mono text-xs text-neutral-700 dark:text-neutral-300">{lyr.detail}</div>
+                  <div className="font-heading text-xs uppercase text-black dark:text-white"><RichText>{lyr.action}</RichText></div>
+                  <div className="font-mono text-xs text-neutral-700 dark:text-neutral-300"><RichText>{lyr.detail}</RichText></div>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono">
-            {demo1CryptoContent.part4.cyberChefNote}
+            <RichText>{demo1CryptoContent.part4.cyberChefNote}</RichText>
           </div>
 
-          <div className="p-3 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-            <span className="font-heading text-xs uppercase">Demo 1 Flag #4:</span>
-            <code className="font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">{demo1CryptoContent.part4.flag}</code>
-          </div>
+          <FlagBadge id={demo1CryptoContent.part4.flagId} label="Demo 1 Flag #4" />
         </div>
       </Accordion>
 
@@ -319,7 +308,7 @@ export default function Demo1Crypto() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, shortcut: state }))}
       >
         <div className="p-4 border-2 border-black bg-yellow-50 dark:bg-neutral-900 text-sm leading-relaxed">
-          {demo1CryptoContent.shortcut.text}
+          <RichText>{demo1CryptoContent.shortcut.text}</RichText>
         </div>
       </Accordion>
 
@@ -334,7 +323,7 @@ export default function Demo1Crypto() {
         <div className="p-4 sm:p-5 border-3 border-black bg-neutral-900 text-neutral-100 font-mono text-xs sm:text-sm space-y-2">
           {demo1CryptoContent.boardFlow.steps.map((st, idx) => (
             <div key={idx} className="pb-1 border-b border-neutral-800 last:border-b-0">
-              {st}
+              <RichText>{st}</RichText>
             </div>
           ))}
         </div>
@@ -349,7 +338,7 @@ export default function Demo1Crypto() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, picoCtf: state }))}
       >
         <p className="text-sm leading-relaxed m-0">
-          {demo1CryptoContent.picoCtfPractice.text}
+          <RichText>{demo1CryptoContent.picoCtfPractice.text}</RichText>
         </p>
       </Accordion>
 

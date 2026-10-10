@@ -4,9 +4,9 @@ import Accordion from '../components/Accordion';
 import CodeBlock from '../components/CodeBlock';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
-import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
+import FlagBadge from '../components/FlagBadge';
 import { linuxBasicsContent } from '../content/linuxBasics';
-import { Terminal, Shield, FolderTree, Key, HelpCircle, CheckCircle2 } from 'lucide-react';
 
 export default function LinuxBasics() {
   const [openSections, setOpenSections] = useState({
@@ -36,7 +36,7 @@ export default function LinuxBasics() {
   const tocItems = [
     { id: 'step-0-prompt', label: 'Step 0: Shell Prompt' },
     { id: 'six-commands', label: 'The Six Core Commands' },
-    { id: 'helpers-section', label: 'Helpers & Shortcuts' },
+    { id: 'helpers-section', label: 'Command Helpers' },
     { id: 'step-1-build-lab', label: 'Step 1: Build Lab' },
     { id: 'step-2-walkthrough', label: 'Step 2: Walkthrough' },
     { id: 'step-3-try', label: 'Step 3: Hands-on' },
@@ -52,7 +52,7 @@ export default function LinuxBasics() {
         tagText="SECTION 6: LINUX"
       >
         <p className="font-bold text-base sm:text-lg mb-0 text-black">
-          Goal: {linuxBasicsContent.goal}
+          Goal: <RichText>{linuxBasicsContent.goal}</RichText>
         </p>
       </PageHeader>
 
@@ -72,10 +72,10 @@ export default function LinuxBasics() {
       >
         <div className="space-y-3">
           <div className="p-4 border-2 border-black bg-neutral-900 text-green-400 font-mono text-base">
-            krishna@LAPTOP:~$ <span className="animate-pulse">_</span>
+            yourname@LAPTOP:~$ <span className="animate-pulse">_</span>
           </div>
           <p className="text-sm sm:text-base leading-relaxed m-0">
-            {linuxBasicsContent.step0.explanation}
+            <RichText>{linuxBasicsContent.step0.explanation}</RichText>
           </p>
         </div>
       </Accordion>
@@ -101,13 +101,13 @@ export default function LinuxBasics() {
               {linuxBasicsContent.sixCommands.map((row, idx) => (
                 <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                   <td className="p-3 font-heading text-black dark:text-white border-r-2 border-black dark:border-white">
-                    {row.command}
+                    <RichText>{row.command}</RichText>
                   </td>
                   <td className="p-3 font-sans text-neutral-800 dark:text-neutral-200 border-r-2 border-black dark:border-white">
-                    {row.does}
+                    <RichText>{row.does}</RichText>
                   </td>
                   <td className="p-3 text-blue-600 dark:text-blue-400 font-bold">
-                    {row.example}
+                    <RichText>{row.example}</RichText>
                   </td>
                 </tr>
               ))}
@@ -120,7 +120,7 @@ export default function LinuxBasics() {
       <Accordion
         id="helpers-section"
         badge="HELPERS"
-        title="Helpers worth showing in the same breath:"
+        title="Command Helpers & Shortcuts"
         isOpen={openSections.helpers}
         onToggle={(state) => setOpenSections(prev => ({ ...prev, helpers: state }))}
       >
@@ -136,10 +136,10 @@ export default function LinuxBasics() {
               {linuxBasicsContent.helpers.map((h, idx) => (
                 <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                   <td className="p-3 font-bold text-black dark:text-white border-r-2 border-black dark:border-white">
-                    {h.helper}
+                    <RichText>{h.helper}</RichText>
                   </td>
                   <td className="p-3 font-sans text-neutral-800 dark:text-neutral-200">
-                    {h.use}
+                    <RichText>{h.use}</RichText>
                   </td>
                 </tr>
               ))}
@@ -157,10 +157,10 @@ export default function LinuxBasics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step1: state }))}
       >
         <div className="space-y-3">
-          <p className="text-sm leading-relaxed">{linuxBasicsContent.step1.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{linuxBasicsContent.step1.intro}</RichText></p>
           <CodeBlock code={linuxBasicsContent.step1.command} language="bash" title="Build ~/ctf-lab" />
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono">
-            {linuxBasicsContent.step1.note}
+            <RichText>{linuxBasicsContent.step1.note}</RichText>
           </div>
         </div>
       </Accordion>
@@ -174,30 +174,28 @@ export default function LinuxBasics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step2: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{linuxBasicsContent.step2.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{linuxBasicsContent.step2.intro}</RichText></p>
 
           <div className="space-y-1.5 p-4 border-2 border-black dark:border-white bg-neutral-900 font-mono text-xs sm:text-sm text-neutral-100">
             {linuxBasicsContent.step2.walkthrough.map((w, idx) => (
               <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 py-1 border-b border-neutral-800 last:border-b-0">
                 <span className="text-green-400 font-bold">{w.cmd}</span>
                 {w.comment && (
-                  <span className="text-neutral-400 text-xs sm:text-right"># {w.comment}</span>
+                  <span className="text-neutral-400 text-xs sm:text-right"># <RichText>{w.comment}</RichText></span>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="p-4 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 space-y-2">
+          <div className="space-y-3">
             <span className="font-heading text-xs uppercase block text-black dark:text-white">Flags to find:</span>
-            <div className="flex flex-wrap gap-2">
-              {linuxBasicsContent.step2.flagsFound.map((f, idx) => (
-                <code key={idx} className="font-mono font-bold text-xs sm:text-sm bg-white dark:bg-black px-2 py-1 border border-black text-emerald-800 dark:text-emerald-300">
-                  {f}
-                </code>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {linuxBasicsContent.step2.flagIds.map((id) => (
+                <FlagBadge key={id} id={id} label={id === 'linux-hidden' ? 'Hidden File Flag' : 'Grep Log Flag'} />
               ))}
             </div>
             <p className="text-xs font-mono font-bold pt-1 text-black dark:text-white m-0">
-              📌 {linuxBasicsContent.step2.pointToLand}
+              📌 <RichText>{linuxBasicsContent.step2.pointToLand}</RichText>
             </p>
           </div>
         </div>
@@ -212,7 +210,7 @@ export default function LinuxBasics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, step3: state }))}
       >
         <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-sm leading-relaxed">
-          {linuxBasicsContent.step3.text}
+          <RichText>{linuxBasicsContent.step3.text}</RichText>
         </div>
       </Accordion>
 
@@ -225,16 +223,23 @@ export default function LinuxBasics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, bandit: state }))}
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed">{linuxBasicsContent.bandit.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{linuxBasicsContent.bandit.intro}</RichText></p>
 
-          <ol className="list-decimal list-inside space-y-2 text-xs sm:text-sm font-mono text-neutral-800 dark:text-neutral-200">
+          <ol className="list-decimal list-inside space-y-3 text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200">
             {linuxBasicsContent.bandit.steps.map((st, idx) => (
-              <li key={idx} className="whitespace-pre-line">{st}</li>
+              <li key={idx} className="leading-relaxed">
+                <span><RichText>{st.text}</RichText></span>
+                {st.command && (
+                  <div className="mt-1.5 ml-4">
+                    <CodeBlock code={st.command} language="bash" title="Bandit SSH" />
+                  </div>
+                )}
+              </li>
             ))}
           </ol>
 
           <div className="p-3 border-2 border-black bg-yellow-100 dark:bg-yellow-950/40 text-xs font-mono font-bold">
-            🎯 {linuxBasicsContent.bandit.homeworkNote}
+            🎯 <RichText>{linuxBasicsContent.bandit.homeworkNote}</RichText>
           </div>
         </div>
       </Accordion>

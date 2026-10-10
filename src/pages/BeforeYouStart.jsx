@@ -4,9 +4,9 @@ import Accordion from '../components/Accordion';
 import TaskList from '../components/TaskList';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
-import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
 import { beforeYouStartContent } from '../content/beforeYouStart';
-import { ShieldAlert, Flag, CheckSquare, Users } from 'lucide-react';
+import { ShieldAlert, Flag } from 'lucide-react';
 
 export default function BeforeYouStart() {
   const [openSections, setOpenSections] = useState({
@@ -40,7 +40,7 @@ export default function BeforeYouStart() {
         tagText="SECTION 1"
       >
         <p className="font-bold text-base sm:text-lg mb-2">
-          {beforeYouStartContent.overview}
+          <RichText>{beforeYouStartContent.overview}</RichText>
         </p>
         <div className="flex flex-wrap gap-2 text-xs font-mono">
           <span className="bg-white px-2 py-0.5 border border-black font-bold">DATE: {beforeYouStartContent.date}</span>
@@ -58,13 +58,13 @@ export default function BeforeYouStart() {
       <Accordion
         id="participants-prep"
         badge="STEP 1"
-        title="Send participants this one day before so the setup slot is only for fixing problems:"
+        title="Participant Prep (Send 1 Day Before)"
         isOpen={openSections.participants}
         onToggle={(state) => setOpenSections(prev => ({ ...prev, participants: state }))}
       >
         <div className="mb-4">
           <p className="text-sm sm:text-base leading-relaxed mb-3">
-            To ensure the workshop runs on schedule without losing the first 40 minutes to basic package downloads, send these instructions to all registered attendees 24 hours prior:
+            To ensure the workshop runs on schedule without losing the 20-minute setup slot to basic package downloads, send these instructions to all registered attendees 24 hours prior:
           </p>
           <TaskList
             id="participant_prep"
@@ -79,7 +79,7 @@ export default function BeforeYouStart() {
       <Accordion
         id="facilitator-prep"
         badge="STEP 2"
-        title="Your own prep (about 90 minutes)"
+        title="Facilitator Prep (90-Minute Dry Run)"
         isOpen={openSections.facilitator}
         onToggle={(state) => setOpenSections(prev => ({ ...prev, facilitator: state }))}
       >
@@ -110,10 +110,10 @@ export default function BeforeYouStart() {
             LEGAL WARNING: IT ACT, 2000 (SECTIONS 43 & 66)
           </div>
           <p className="text-sm sm:text-base leading-relaxed font-sans font-medium">
-            {beforeYouStartContent.ethics.text}
+            <RichText>{beforeYouStartContent.ethics.text}</RichText>
           </p>
           <div className="mt-3 p-3 bg-white dark:bg-neutral-900 border-2 border-black text-xs font-mono">
-            <strong>Key boundary:</strong> Attacking a practice CTF instance you initiated = OK. Attacking the university network, college lab router, or classmate = ILLEGAL.
+            <strong>Key boundary:</strong> Attacking a practice CTF instance you initiated = OK. Attacking the university network, college lab router, or classmate without permission can violate the IT Act, 2000.
           </div>
         </div>
       </Accordion>
@@ -132,16 +132,16 @@ export default function BeforeYouStart() {
             STANDARD FLAG CONVENTIONS
           </div>
           <p className="text-sm sm:text-base leading-relaxed font-sans mb-3">
-            {beforeYouStartContent.flagFormat.text}
+            <RichText>{beforeYouStartContent.flagFormat.text}</RichText>
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
             <div className="p-3 bg-white dark:bg-neutral-900 border-2 border-black">
-              <span className="font-bold text-neutral-500 block mb-1">Workshop Demo Flags:</span>
-              <code className="text-sm font-bold text-brutal-pink">flag&#123;base64_is_not_encryption&#125;</code>
+              <span className="font-bold text-neutral-500 block mb-1">Workshop Demo Flags (example):</span>
+              <code className="text-sm font-bold text-brutal-pink">flag&#123;demo_flag_format&#125;</code>
             </div>
             <div className="p-3 bg-white dark:bg-neutral-900 border-2 border-black">
-              <span className="font-bold text-neutral-500 block mb-1">Official picoCTF Flags:</span>
+              <span className="font-bold text-neutral-500 block mb-1">Official picoCTF Flags (example):</span>
               <code className="text-sm font-bold text-blue-600 dark:text-blue-400">picoCTF&#123;wh0_kn0ws_th3_fl4g_1234&#125;</code>
             </div>
           </div>

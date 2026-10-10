@@ -5,9 +5,9 @@ import CodeBlock from '../components/CodeBlock';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import FlagChecker from '../components/FlagChecker';
-import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
 import { miniCtfContent } from '../content/miniCtf';
-import { Trophy, HelpCircle, FileText, Search, Wrench, Shield, Compass } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function MiniCtfWrapUp() {
   const [cheatFilter, setCheatFilter] = useState('');
@@ -90,14 +90,14 @@ export default function MiniCtfWrapUp() {
           <ol className="list-decimal list-inside space-y-2 text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200">
             {miniCtfContent.miniCtf.steps.map((st) => (
               <li key={st.num} className="leading-relaxed">
-                {st.text}
+                <RichText text={st.text} />
               </li>
             ))}
           </ol>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs sm:text-sm font-mono">
             🎁 <strong>Guaranteed Solvable Fallback: </strong>
-            {miniCtfContent.miniCtf.fallbackNote}
+            <RichText text={miniCtfContent.miniCtf.fallbackNote} />
           </div>
         </div>
       </Accordion>
@@ -112,7 +112,7 @@ export default function MiniCtfWrapUp() {
       >
         <div className="space-y-4">
           <p className="text-sm leading-relaxed">
-            {miniCtfContent.wrapUp.steps[0].text}
+            <RichText text={miniCtfContent.wrapUp.walkthrough} />
           </p>
 
           <div>
@@ -121,7 +121,7 @@ export default function MiniCtfWrapUp() {
               A write-up is a short note explaining how you solved a challenge. Writing one is how the learning sticks.
             </p>
             <CodeBlock
-              code={miniCtfContent.wrapUp.steps[1].template}
+              code={miniCtfContent.wrapUp.template}
               language="markdown"
               title="Official Write-up Template"
             />
@@ -130,12 +130,12 @@ export default function MiniCtfWrapUp() {
           <div className="p-4 border-2 border-black bg-white dark:bg-neutral-900 text-xs sm:text-sm">
             <h5 className="font-heading text-xs uppercase mb-1">Next steps for participants:</h5>
             <p className="m-0 text-neutral-700 dark:text-neutral-300">
-              {miniCtfContent.wrapUp.steps[2].text}
+              <RichText text={miniCtfContent.wrapUp.nextSteps} />
             </p>
           </div>
 
           <div className="p-3 border-2 border-black bg-red-100 dark:bg-red-950/40 text-xs font-mono font-bold text-red-700 dark:text-red-300">
-            ⚖️ {miniCtfContent.wrapUp.steps[3].text}
+            ⚖️ <RichText text={miniCtfContent.wrapUp.ethicsReminder} />
           </div>
         </div>
       </Accordion>
@@ -191,10 +191,10 @@ export default function MiniCtfWrapUp() {
                   filteredCheatSheet.map((row, idx) => (
                     <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                       <td className="p-3 font-bold text-black dark:text-white border-r-2 border-black dark:border-white">
-                        {row.symptom}
+                        <RichText text={row.symptom} />
                       </td>
                       <td className="p-3 text-blue-600 dark:text-blue-400 font-bold">
-                        {row.firstMove}
+                        <RichText text={row.firstMove} />
                       </td>
                     </tr>
                   ))
@@ -255,10 +255,10 @@ export default function MiniCtfWrapUp() {
                   filteredTroubleshooting.map((row, idx) => (
                     <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                       <td className="p-3 font-bold text-red-600 dark:text-red-400 border-r-2 border-black dark:border-white">
-                        {row.problem}
+                        <RichText text={row.problem} />
                       </td>
                       <td className="p-3 text-neutral-800 dark:text-neutral-200 font-sans">
-                        {row.fix}
+                        <RichText text={row.fix} />
                       </td>
                     </tr>
                   ))
@@ -278,7 +278,7 @@ export default function MiniCtfWrapUp() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, sources: state }))}
       >
         <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-900 text-sm leading-relaxed">
-          {miniCtfContent.sources.text}
+          <RichText text={miniCtfContent.sources.text} />
         </div>
       </Accordion>
 

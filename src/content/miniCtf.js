@@ -18,12 +18,8 @@ export const miniCtfContent = {
   wrapUp: {
     title: "Wrap-up (3:15 to 3:30)",
     time: "3:15 to 3:30",
-    steps: [
-      { num: 1, text: "Walk through one solution from the room, whichever team volunteers. Make them narrate: what they saw, which tool they tried, what failed, what worked." },
-      { 
-        num: 2, 
-        text: "Teach write-ups. A write-up is a short note explaining how you solved a challenge, and writing one is how the learning sticks. Use this template:",
-        template: `# Challenge name
+    walkthrough: "Walk through one solution from the room, whichever team volunteers. Make them narrate: what they saw, which tool they tried, what failed, what worked.",
+    template: `# Challenge name
 Category: Forensics | Points: 100 | Platform: picoCTF
 
 ## Description
@@ -37,33 +33,31 @@ Category: Forensics | Points: 100 | Platform: picoCTF
 ## Flag
 flag{...}
 
-## What I learned`
-      },
-      { num: 3, text: "Next steps for them: finish Bandit levels 0 to 5, solve 10 picoCTF challenges across categories, try TryHackMe's beginner rooms, and look up upcoming events on CTFtime.org to play with a team." },
-      { num: 4, text: "Close with the ethics reminder: only attack what you are authorized to attack." }
-    ]
+## What I learned`,
+    nextSteps: "Next steps for them: finish Bandit levels 0 to 5, solve 10 picoCTF challenges across categories, try TryHackMe's beginner rooms, and look up upcoming events on CTFtime.org to play with a team.",
+    ethicsReminder: "Close with the ethics reminder: only attack what you are authorized to attack."
   },
 
   cheatSheet: [
-    { symptom: "Text ending in = or ==", firstMove: "Base64: From Base64 in CyberChef" },
-    { symptom: "Only 0-9 and a-f", firstMove: "Hex: From Hex" },
-    { symptom: "Gibberish that starts like synt{", firstMove: "ROT13 or a Caesar shift" },
-    { symptom: "Unknown encoding", firstMove: "CyberChef Magic" },
-    { symptom: "A web page", firstMove: "View source, linked files, DevTools, /robots.txt , cookies" },
-    { symptom: "A downloaded file", firstMove: "file , strings , exiftool , binwalk -e , xxd" },
-    { symptom: "An image that may hide data", firstMove: "steghide extract -sf , then zsteg for PNG" },
-    { symptom: "A big file or log", firstMove: "grep -i flag" },
-    { symptom: "A server address and port", firstMove: "Connect with nc host port or ssh as the challenge says" }
+    { symptom: "Text ending in `=` or `==`", firstMove: "Base64: **From Base64** in CyberChef" },
+    { symptom: "Only `0-9` and `a-f`", firstMove: "Hex: **From Hex**" },
+    { symptom: "Gibberish that starts like `synt{`", firstMove: "ROT13 or a Caesar shift" },
+    { symptom: "Unknown encoding", firstMove: "CyberChef **Magic**" },
+    { symptom: "A web page", firstMove: "View source, linked files, DevTools, `/robots.txt`, cookies" },
+    { symptom: "A downloaded file", firstMove: "`file`, `strings`, `exiftool`, `binwalk -e`, `xxd`" },
+    { symptom: "An image that may hide data", firstMove: "`steghide extract -sf`, then `zsteg` for PNG" },
+    { symptom: "A big file or log", firstMove: "`grep -i flag`" },
+    { symptom: "A server address and port", firstMove: "Connect with `nc host port` or `ssh` as the challenge says" }
   ],
 
   troubleshooting: [
-    { problem: "command not found", fix: "The tool is not installed: run the sudo apt install line from Setup Part C" },
-    { problem: "Permission denied", fix: "Wrong folder or file permissions. Check with ls -l , or use sudo only for installs" },
-    { problem: "No such file or directory", fix: "Wrong folder. Run pwd and ls to see where you are, and check spelling and capitals" },
-    { problem: "Browser cannot open localhost:8765", fix: "Check the server is still running in the Ubuntu window. Try 127.0.0.1:8765" },
-    { problem: "CyberChef gives garbage", fix: "Wrong decoder. Look at the characters again, or try Magic" },
-    { problem: "Pasted flag rejected", fix: "Copy the whole flag including flag{ and } , no trailing space" },
-    { problem: "steghide cannot extract", fix: "Try an empty passphrase (press Enter). Real challenges give the password in a hint" },
+    { problem: "`command not found`", fix: "The tool is not installed: run the `sudo apt install` line from Setup Part C" },
+    { problem: "`Permission denied`", fix: "Wrong folder or file permissions. Check with `ls -l`, or use `sudo` only for installs" },
+    { problem: "`No such file or directory`", fix: "Wrong folder. Run `pwd` and `ls` to see where you are, and check spelling and capitals" },
+    { problem: "Browser cannot open `localhost:8765`", fix: "Check the server is still running in the Ubuntu window. Try `127.0.0.1:8765`" },
+    { problem: "CyberChef gives garbage", fix: "Wrong decoder. Look at the characters again, or try **Magic**" },
+    { problem: "Pasted flag rejected", fix: "Copy the whole flag including `flag{` and `}`, no trailing space" },
+    { problem: "`steghide` cannot extract", fix: "Try an empty passphrase (press Enter). Real challenges give the password in a hint" },
     { problem: "Someone is far behind", fix: "Pair them with a neighbour. Never stop the room for one laptop" }
   ],
 

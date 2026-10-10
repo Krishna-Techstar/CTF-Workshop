@@ -5,8 +5,10 @@ import CodeBlock from '../components/CodeBlock';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Sticker from '../components/Sticker';
+import RichText from '../components/RichText';
+import FlagBadge from '../components/FlagBadge';
 import { demo3ForensicsContent } from '../content/demo3Forensics';
-import { Coffee, Search, ChevronLeft, ChevronRight, FileSearch, ShieldCheck, Binary, Eye } from 'lucide-react';
+import { Coffee, ChevronLeft, ChevronRight, Terminal } from 'lucide-react';
 
 export default function Demo3Forensics() {
   const [stepperIdx, setStepperIdx] = useState(0);
@@ -41,6 +43,7 @@ export default function Demo3Forensics() {
     { id: 'forensics-stepper', label: 'Command Stepper' },
     { id: 'all-steps-detailed', label: 'Detailed Steps 1-6' },
     { id: 'summary-table-slide', label: 'Slide Summary Table' },
+    { id: 'picoctf-forensics-practice', label: 'Practice on picoCTF' },
   ];
 
   const currentStep = demo3ForensicsContent.steps[stepperIdx];
@@ -78,10 +81,10 @@ export default function Demo3Forensics() {
             10-MINUTE BREAK &amp; FILE DISTRIBUTION PROTOCOL
           </div>
           <p className="text-sm sm:text-base leading-relaxed font-sans mb-3">
-            {demo3ForensicsContent.breakInstructions}
+            <RichText>{demo3ForensicsContent.breakInstructions}</RichText>
           </p>
           <div className="p-3 bg-white dark:bg-neutral-900 border-2 border-black font-mono text-xs text-red-600 dark:text-red-400 font-bold">
-            ⚠️ NEVER send images through WhatsApp, Telegram or Instagram: image compression strips out appended bytes and EXIF comments!
+            ⚠️ Warning: never send them as a photo; send as a ZIP or file. Messaging apps silently re-compress images and destroy hidden payload bytes.
           </div>
         </div>
       </Accordion>
@@ -96,7 +99,7 @@ export default function Demo3Forensics() {
       >
         <div className="space-y-4">
           <p className="text-sm leading-relaxed whitespace-pre-line">
-            {demo3ForensicsContent.step0.intro}
+            <RichText>{demo3ForensicsContent.step0.intro}</RichText>
           </p>
 
           <div>
@@ -114,13 +117,13 @@ export default function Demo3Forensics() {
                   {demo3ForensicsContent.step0.magicNumbersTable.map((row, idx) => (
                     <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                       <td className="p-3 font-heading text-black dark:text-white border-r-2 border-black dark:border-white">
-                        {row.type}
+                        <RichText>{row.type}</RichText>
                       </td>
                       <td className="p-3 font-bold text-brutal-pink border-r-2 border-black dark:border-white">
-                        {row.bytes}
+                        <RichText>{row.bytes}</RichText>
                       </td>
                       <td className="p-3 text-neutral-800 dark:text-neutral-200">
-                        {row.text}
+                        <RichText>{row.text}</RichText>
                       </td>
                     </tr>
                   ))}
@@ -130,7 +133,7 @@ export default function Demo3Forensics() {
           </div>
 
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono font-bold">
-            📌 {demo3ForensicsContent.step0.routine}
+            📌 <RichText>{demo3ForensicsContent.step0.routine}</RichText>
           </div>
         </div>
       </Accordion>
@@ -144,10 +147,10 @@ export default function Demo3Forensics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, prep: state }))}
       >
         <div className="space-y-3">
-          <p className="text-sm leading-relaxed">{demo3ForensicsContent.prep.intro}</p>
+          <p className="text-sm leading-relaxed"><RichText>{demo3ForensicsContent.prep.intro}</RichText></p>
           <CodeBlock code={demo3ForensicsContent.prep.script} language="bash" title="Create evidence.jpg & stego.jpg" />
           <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400">
-            {demo3ForensicsContent.prep.verification}
+            <RichText>{demo3ForensicsContent.prep.verification}</RichText>
           </p>
         </div>
       </Accordion>
@@ -157,7 +160,7 @@ export default function Demo3Forensics() {
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b-3 border-black dark:border-white">
           <div className="flex items-center gap-2">
             <div className="p-2 border-2 border-black bg-brutal-purple text-white">
-              <Binary className="w-5 h-5 text-black" />
+              <Terminal className="w-5 h-5 text-black" />
             </div>
             <div>
               <h3 className="font-heading text-lg sm:text-xl m-0 text-black dark:text-white">
@@ -204,26 +207,33 @@ export default function Demo3Forensics() {
             </Sticker>
           </div>
 
-          <div className="text-xs font-mono font-bold text-neutral-600 dark:text-neutral-400 mb-2">
-            Purpose: <span className="text-black dark:text-white font-normal">{currentStep.purpose}</span>
+          <div className="text-xs font-mono font-bold text-neutral-600 dark:text-neutral-400 mb-3">
+            Purpose: <span className="text-black dark:text-white font-normal"><RichText>{currentStep.purpose}</RichText></span>
           </div>
 
-          <CodeBlock code={currentStep.command} language="bash" title={`Command: ${currentStep.name}`} />
-
-          <div className="p-3 bg-neutral-100 dark:bg-neutral-800 border-2 border-black text-xs font-mono mb-4">
-            <span className="font-bold text-neutral-700 dark:text-neutral-300 block mb-1">Expected Output / Signature:</span>
-            <code className="text-emerald-700 dark:text-emerald-400 font-bold">{currentStep.expected}</code>
+          {/* Render all commands in current step */}
+          <div className="space-y-4">
+            {currentStep.commands.map((cmd, cIdx) => (
+              <div key={cIdx} className="border-t-2 border-neutral-200 dark:border-neutral-800 pt-3 first:border-t-0 first:pt-0">
+                <div className="text-xs font-heading uppercase text-neutral-700 dark:text-neutral-300 mb-1">
+                  {cIdx + 1}. {cmd.label}
+                </div>
+                <CodeBlock code={cmd.code} language="bash" title={cmd.label} />
+                <div className="p-2.5 bg-neutral-100 dark:bg-neutral-800 border-2 border-black text-xs font-mono">
+                  <RichText>{cmd.note}</RichText>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {currentStep.flag && (
-            <div className="mb-4 p-2.5 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-              <span className="font-heading text-xs uppercase">Discovered Flag:</span>
-              <code className="font-mono font-bold text-xs sm:text-sm text-emerald-800 dark:text-emerald-300">{currentStep.flag}</code>
+          {currentStep.flagId && (
+            <div className="mt-4">
+              <FlagBadge id={currentStep.flagId} label="Discovered Flag" />
             </div>
           )}
 
           {/* Stepper Navigation Buttons */}
-          <div className="flex items-center justify-between pt-3 border-t-2 border-neutral-200 dark:border-neutral-800">
+          <div className="flex items-center justify-between pt-4 mt-4 border-t-2 border-neutral-200 dark:border-neutral-800">
             <button
               type="button"
               disabled={stepperIdx === 0}
@@ -268,46 +278,27 @@ export default function Demo3Forensics() {
                 </span>
                 <span>{st.title}</span>
               </h5>
-              <p className="text-xs sm:text-sm leading-relaxed mb-2">{st.explanation}</p>
-              <CodeBlock code={st.command} language="bash" />
-              
-              {st.proofCommand && (
-                <div className="mt-3">
-                  <p className="text-xs font-mono font-bold mb-1">{st.proofExplanation}</p>
-                  <CodeBlock code={st.proofCommand} language="bash" title="Proof" />
-                </div>
-              )}
+              <p className="text-xs sm:text-sm leading-relaxed mb-3 text-neutral-700 dark:text-neutral-300">
+                <strong>Purpose: </strong><RichText>{st.purpose}</RichText>
+              </p>
 
-              {st.terminalDecodeCommand && (
-                <div className="mt-3">
-                  <CodeBlock code={st.terminalDecodeCommand} language="bash" title="ExifTool Decode" />
-                  <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400">{st.realWorldNote}</p>
-                </div>
-              )}
+              <div className="space-y-4">
+                {st.commands.map((cmd, cIdx) => (
+                  <div key={cIdx} className="border-t border-neutral-200 dark:border-neutral-800 pt-3 first:border-t-0 first:pt-0">
+                    <div className="text-xs font-mono font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                      {cIdx + 1}. {cmd.label}:
+                    </div>
+                    <CodeBlock code={cmd.code} language="bash" title={cmd.label} />
+                    <div className="p-2.5 bg-neutral-100 dark:bg-neutral-800 border-2 border-black text-xs font-mono">
+                      <RichText>{cmd.note}</RichText>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-              {st.extractCommand && (
-                <div className="mt-3">
-                  <CodeBlock code={st.extractCommand} language="bash" title="Binwalk Extraction" />
-                  {st.bonusUnzipCommand && (
-                    <>
-                      <p className="text-xs font-mono mt-2 mb-1">{st.bonusExplanation}</p>
-                      <CodeBlock code={st.bonusUnzipCommand} language="bash" title="Direct Unzip" />
-                    </>
-                  )}
-                </div>
-              )}
-
-              {st.extractStegoCommand && (
-                <div className="mt-3">
-                  <CodeBlock code={st.extractStegoCommand} language="bash" title="Steghide Extraction" />
-                  <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400">{st.steghideDetails}</p>
-                </div>
-              )}
-
-              {st.flag && (
-                <div className="mt-3 p-2.5 border-2 border-black bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-between">
-                  <span className="font-heading text-xs uppercase">Flag:</span>
-                  <code className="font-mono font-bold text-xs text-emerald-800 dark:text-emerald-300">{st.flag}</code>
+              {st.flagId && (
+                <div className="mt-4">
+                  <FlagBadge id={st.flagId} label="Flag" />
                 </div>
               )}
             </div>
@@ -315,7 +306,7 @@ export default function Demo3Forensics() {
 
           {/* Other tools to name drop */}
           <div className="p-3 border-2 border-black bg-cream dark:bg-neutral-800 text-xs font-mono">
-            ℹ️ {demo3ForensicsContent.otherTools}
+            ℹ️ <RichText>{demo3ForensicsContent.otherTools}</RichText>
           </div>
         </div>
       </Accordion>
@@ -341,13 +332,13 @@ export default function Demo3Forensics() {
               {demo3ForensicsContent.summaryTable.map((row, idx) => (
                 <tr key={idx} className="hover:bg-cream dark:hover:bg-neutral-800/50">
                   <td className="p-3 text-neutral-800 dark:text-neutral-200 border-r-2 border-black dark:border-white">
-                    {row.symptom}
+                    <RichText>{row.symptom}</RichText>
                   </td>
                   <td className="p-3 font-bold text-black dark:text-white border-r-2 border-black dark:border-white">
-                    {row.tool}
+                    <RichText>{row.tool}</RichText>
                   </td>
                   <td className="p-3 font-bold text-blue-600 dark:text-blue-400">
-                    {row.command}
+                    <RichText>{row.command}</RichText>
                   </td>
                 </tr>
               ))}
@@ -365,7 +356,7 @@ export default function Demo3Forensics() {
         onToggle={(state) => setOpenSections(prev => ({ ...prev, picoCtf: state }))}
       >
         <p className="text-sm leading-relaxed m-0">
-          {demo3ForensicsContent.picoCtfPractice.text}
+          <RichText>{demo3ForensicsContent.picoCtfPractice.text}</RichText>
         </p>
       </Accordion>
 
