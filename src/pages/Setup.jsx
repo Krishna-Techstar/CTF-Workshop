@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
 import Accordion from '../components/Accordion';
 import CodeBlock from '../components/CodeBlock';
-import StepCard from '../components/StepCard';
 import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import RichText from '../components/RichText';
@@ -96,7 +95,7 @@ export default function Setup() {
           </div>
 
           <div className="p-4 border-3 border-black bg-cream dark:bg-neutral-900 shadow-brutal-sm text-sm font-mono">
-            <span className="font-bold text-brutal-pink">⚡ Webshell Fallback: </span>
+            <span className="font-bold text-brutal-pinkText dark:text-brutal-pink">⚡ Webshell Fallback: </span>
             <RichText>{setupContent.partA.note}</RichText>
           </div>
         </div>

@@ -230,7 +230,7 @@ export default function Playground() {
             </label>
             <button
               onClick={() => { setInput(''); setOutput(''); setMagicResults(null); }}
-              className="text-xs font-mono font-bold underline hover:text-brutal-pink"
+              className="text-xs font-mono font-bold underline hover:text-brutal-pinkText dark:hover:text-brutal-pink"
             >
               Clear
             </button>

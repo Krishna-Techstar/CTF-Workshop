@@ -86,7 +86,7 @@ export default function Demo2Web() {
           </div>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs sm:text-sm leading-relaxed">
-            <span className="font-heading uppercase text-xs text-brutal-pink block mb-1">COOKIE ANATOMY:</span>
+            <span className="font-heading uppercase text-xs text-brutal-pinkText dark:text-brutal-pink block mb-1">COOKIE ANATOMY:</span>
             <RichText>{demo2WebContent.step0.cookieExplanation}</RichText>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function Demo2Web() {
           </ol>
 
           <div className="p-4 border-2 border-black bg-cream dark:bg-neutral-800 text-xs sm:text-sm leading-relaxed">
-            <span className="font-heading uppercase text-xs text-brutal-pink block mb-1">CORE LESSON:</span>
+            <span className="font-heading uppercase text-xs text-brutal-pinkText dark:text-brutal-pink block mb-1">CORE LESSON:</span>
             <RichText>{demo2WebContent.step2.lesson}</RichText>
           </div>
 

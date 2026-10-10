@@ -8,7 +8,7 @@
 ### ⚡ Quick Start (Copy & Run)
 
 ```bash
-git clone <repo-url> && cd CTF
+git clone <repo-url> && cd CTF-Workshop
 npm install
 npm run dev
 ```
@@ -26,7 +26,7 @@ npm run dev
 | **CyberChef Playground** | `#/demo-1` | Live Base64, ROT13, Hex decoder with **Magic ✨** auto-flag detection |
 | **DevTools Navigator** | `#/demo-2` | Interactive inspector cheatsheet highlighting Elements, Network & Cookies |
 | **Forensics Stepper** | `#/break-and-demo-3` | 6-stage command order walkthrough (`file` ➔ `strings` ➔ `exiftool` ➔ `binwalk` ➔ `xxd` ➔ `steghide`) |
-| **Flag Checker & Scoreboard** | `#/mini-ctf` | SHA-256 hashed validation, points tracker & confetti celebrations |
+| **Flag Checker & Score Tracker** | `#/mini-ctf` | SHA-256 hashed validation, personal per-browser score tracker & confetti celebrations |
 | **Floating Workshop Timer** | Bottom-Right | Schedule interval countdown with low-time visual warnings |
 
 </details>
@@ -38,15 +38,15 @@ npm run dev
 <details open>
 <summary><b>⏱️ Clickable Schedule Matrix</b></summary>
 
-- [ ] **0:00 – 0:20** ➔ [Before You Start & Ethics](/#/before-you-start) *(IT Act 2000, Checklist, Flag formats)*
-- [ ] **0:20 – 0:40** ➔ [Setup: picoCTF, CyberChef & WSL](/#/setup) *(OS-specific tabs, BIOS troubleshooting)*
-- [ ] **0:40 – 1:10** ➔ [Demo 1: Crypto & Encodings](/#/demo-1) *(Base64, ROT13, Hex, Layered pipeline)*
-- [ ] **1:10 – 1:40** ➔ [Demo 2: Web & DevTools](/#/demo-2) *(Comments, Cookies, robots.txt, curl)*
+- [ ] **0:00 – 0:20** ➔ [Before You Start & Ethics](https://ctf-workshop.vercel.app/#/before-you-start) *(IT Act 2000, Checklist, Flag formats)*
+- [ ] **0:20 – 0:40** ➔ [Setup: picoCTF, CyberChef & WSL](https://ctf-workshop.vercel.app/#/setup) *(OS-specific tabs, BIOS troubleshooting)*
+- [ ] **0:40 – 1:10** ➔ [Demo 1: Crypto & Encodings](https://ctf-workshop.vercel.app/#/demo-1) *(Base64, ROT13, Hex, Layered pipeline)*
+- [ ] **1:10 – 1:40** ➔ [Demo 2: Web & DevTools](https://ctf-workshop.vercel.app/#/demo-2) *(Comments, Cookies, robots.txt, curl)*
 - [ ] **1:40 – 1:50** ➔ *Break & Lossless File Distribution*
-- [ ] **1:50 – 2:20** ➔ [Demo 3: Forensics & Stego](/#/break-and-demo-3) *(Magic bytes, Binwalk carving, Steghide)*
-- [ ] **2:20 – 2:30** ➔ [Linux Basics & Bandit](/#/linux-basics) *(6 core commands, Guided lab, OverTheWire)*
-- [ ] **2:30 – 3:15** ➔ [Mini CTF Competition](/#/mini-ctf) *(Teams of 2–3, picoCTF practice, Live scoreboard)*
-- [ ] **3:15 – 3:30** ➔ [Wrap-up & Write-ups](/#/mini-ctf) *(Standardized report template & next milestones)*
+- [ ] **1:50 – 2:20** ➔ [Demo 3: Forensics & Stego](https://ctf-workshop.vercel.app/#/break-and-demo-3) *(Magic bytes, Binwalk carving, Steghide)*
+- [ ] **2:20 – 2:30** ➔ [Linux Basics & Bandit](https://ctf-workshop.vercel.app/#/linux-basics) *(6 core commands, Guided lab, OverTheWire)*
+- [ ] **2:30 – 3:15** ➔ [Mini CTF Competition](https://ctf-workshop.vercel.app/#/mini-ctf) *(Teams of 2–3, picoCTF practice; personal score tracker / whiteboard scoring)*
+- [ ] **3:15 – 3:30** ➔ [Wrap-up & Write-ups](https://ctf-workshop.vercel.app/#/mini-ctf) *(Standardized report template & next milestones)*
 
 </details>
 

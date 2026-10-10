@@ -112,7 +112,7 @@ export default function Demo1Crypto() {
           </div>
 
           <div className="p-4 border-3 border-black bg-cream dark:bg-neutral-800 text-black dark:text-white shadow-brutal-sm">
-            <span className="font-heading text-sm text-brutal-pink block mb-1">KEY MESSAGE:</span>
+            <span className="font-heading text-sm text-brutal-pinkText dark:text-brutal-pink block mb-1">KEY MESSAGE:</span>
             <p className="text-sm sm:text-base m-0 font-medium">
               <RichText>{demo1CryptoContent.step0.keyMessage}</RichText>
             </p>

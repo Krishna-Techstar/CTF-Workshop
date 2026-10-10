@@ -6,9 +6,8 @@ import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import Sticker from '../components/Sticker';
 import RichText from '../components/RichText';
-import FlagBadge from '../components/FlagBadge';
 import { demo3ForensicsContent } from '../content/demo3Forensics';
-import { Coffee, ChevronLeft, ChevronRight, Terminal } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Demo3Forensics() {
   const [stepperIdx, setStepperIdx] = useState(0);
@@ -119,7 +118,7 @@ export default function Demo3Forensics() {
                       <td className="p-3 font-heading text-black dark:text-white border-r-2 border-black dark:border-white">
                         <RichText>{row.type}</RichText>
                       </td>
-                      <td className="p-3 font-bold text-brutal-pink border-r-2 border-black dark:border-white">
+                      <td className="p-3 font-bold text-brutal-pinkText dark:text-brutal-pink border-r-2 border-black dark:border-white">
                         <RichText>{row.bytes}</RichText>
                       </td>
                       <td className="p-3 text-neutral-800 dark:text-neutral-200">

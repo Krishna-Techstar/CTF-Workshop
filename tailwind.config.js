@@ -12,6 +12,7 @@ export default {
         brutal: {
           yellow: '#FFD93D',
           pink: '#FF6B9D',
+          pinkText: '#B0124F',
           blue: '#4D9DE0',
           green: '#6BCB77',
           orange: '#FF9F45',

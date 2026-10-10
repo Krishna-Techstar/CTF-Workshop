@@ -1,3 +1,4 @@
+<!doctype html>
 <!--
 ===================================================================================
 CTF WORKSHOP: DETAILED STEP-BY-STEP GUIDE - INTERACTIVE DOCUMENTATION WEBSITE
@@ -35,7 +36,6 @@ HOW TO HOST & DEPLOY:
     Deploy the repository directly. Set Build Command to `npm run build` and Publish Directory to `dist`.
 ===================================================================================
 -->
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -43,6 +43,34 @@ HOW TO HOST & DEPLOY:
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CTF Workshop: Detailed Step-by-Step Guide</title>
     <meta name="description" content="Complete, interactive neobrutalist documentation guide for beginner CTF workshop. Covers Crypto, Web, Forensics, Linux, Bandit, and PicoCTF." />
+    <meta name="theme-color" content="#FFD93D" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CTF Workshop: Detailed Step-by-Step Guide" />
+    <meta property="og:description" content="Complete, interactive neobrutalist documentation guide for beginner CTF workshop. Covers Crypto, Web, Forensics, Linux, Bandit, and PicoCTF." />
+    <meta property="og:image" content="/og-image.svg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CTF Workshop: Detailed Step-by-Step Guide" />
+    <meta name="twitter:description" content="Complete, interactive neobrutalist documentation guide for beginner CTF workshop. Covers Crypto, Web, Forensics, Linux, Bandit, and PicoCTF." />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <!-- Pre-hydration Theme Script -->
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('ctf_theme');
+          if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Google Fonts: Space Grotesk, Archivo Black, JetBrains Mono, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

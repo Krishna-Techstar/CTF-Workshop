@@ -6,7 +6,6 @@ import TableOfContents from '../components/TableOfContents';
 import PageNav from '../components/PageNav';
 import RichText from '../components/RichText';
 import { beforeYouStartContent } from '../content/beforeYouStart';
-import { ShieldAlert, Flag } from 'lucide-react';
 
 export default function BeforeYouStart() {
   const [openSections, setOpenSections] = useState({
@@ -138,7 +137,7 @@ export default function BeforeYouStart() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
             <div className="p-3 bg-white dark:bg-neutral-900 border-2 border-black">
               <span className="font-bold text-neutral-500 block mb-1">Workshop Demo Flags (example):</span>
-              <code className="text-sm font-bold text-brutal-pink">flag&#123;demo_flag_format&#125;</code>
+              <code className="text-sm font-bold text-brutal-pinkText dark:text-brutal-pink">flag&#123;demo_flag_format&#125;</code>
             </div>
             <div className="p-3 bg-white dark:bg-neutral-900 border-2 border-black">
               <span className="font-bold text-neutral-500 block mb-1">Official picoCTF Flags (example):</span>
