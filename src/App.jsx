@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import SearchModal from './components/SearchModal';
 import WorkshopTimer from './components/WorkshopTimer';
@@ -18,10 +18,21 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
 
-  // Scroll to top on route change
+  // Scroll to anchor or top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    const anchor = location.state?.anchor;
+    if (anchor) {
+      window.dispatchEvent(new CustomEvent('ctf-open-section', { detail: anchor }));
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.state]);
 
   // Global keyboard shortcut: "/" opens search
   useEffect(() => {
@@ -52,6 +63,7 @@ export default function App() {
             <Route path="/break-and-demo-3" element={<Demo3Forensics />} />
             <Route path="/linux-basics" element={<LinuxBasics />} />
             <Route path="/mini-ctf" element={<MiniCtfWrapUp />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>

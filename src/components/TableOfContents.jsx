@@ -3,10 +3,13 @@ import { ListFilter, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function TableOfContents({ items = [], onExpandAll, onCollapseAll }) {
   const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    window.dispatchEvent(new CustomEvent('ctf-open-section', { detail: id }));
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
   };
 
   return (

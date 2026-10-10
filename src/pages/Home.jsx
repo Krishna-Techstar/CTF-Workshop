@@ -107,11 +107,12 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SCHEDULE.map((item, idx) => (
-            <div
-              key={idx}
-              onClick={() => navigate(item.route)}
-              className="group border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal hover:shadow-brutal-lg transition-all duration-150 cursor-pointer flex flex-col justify-between hover:-translate-y-1"
+          {SCHEDULE.map((item) => (
+            <Link
+              key={item.id}
+              to={item.route}
+              state={{ anchor: item.anchor }}
+              className="group border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal hover:shadow-brutal-lg transition-all duration-150 flex flex-col justify-between motion-safe:hover:-translate-y-1 no-underline text-inherit block"
             >
               <div>
                 {/* Header Band */}
@@ -147,7 +148,7 @@ export default function Home() {
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

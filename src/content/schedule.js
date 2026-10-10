@@ -45,6 +45,7 @@ export const SCHEDULE = [
     title: 'Break & File Distribution',
     description: '10-minute break while distributing evidence.jpg and stego.jpg as clean ZIP archives without image compression.',
     route: '/break-and-demo-3',
+    anchor: 'break-section',
     durationMinutes: 10,
     accent: '#FF9F45', // Orange
     colorName: 'orange',
@@ -55,6 +56,7 @@ export const SCHEDULE = [
     title: 'Demo 3: Forensics & Steganography',
     description: 'Magic numbers, file signature verification, strings, ExifTool metadata, binwalk file extraction, xxd hex view, and steghide.',
     route: '/break-and-demo-3',
+    anchor: 'forensics-stepper',
     durationMinutes: 30,
     accent: '#A29BFE', // Purple
     colorName: 'purple',
@@ -75,6 +77,7 @@ export const SCHEDULE = [
     title: 'Mini CTF: Team Challenge',
     description: 'Hands-on competition in teams of 2-3 on picoCTF Practice challenges, hint escalation rules, and interactive flag verification.',
     route: '/mini-ctf',
+    anchor: 'mini-ctf-rules',
     durationMinutes: 45,
     accent: '#FF6B9D', // Pink
     colorName: 'pink',
@@ -85,6 +88,7 @@ export const SCHEDULE = [
     title: 'Wrap-up, Write-ups & Cheat Sheet',
     description: 'Participant solution presentation, structured write-up template, next learning platforms, and comprehensive troubleshooting.',
     route: '/mini-ctf',
+    anchor: 'wrap-up-section',
     durationMinutes: 15,
     accent: '#6BCB77', // Green
     colorName: 'green',

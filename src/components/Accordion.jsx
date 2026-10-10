@@ -14,6 +14,20 @@ export default function Accordion({
 
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalOpen;
 
+  useEffect(() => {
+    const handleOpenSection = (e) => {
+      if (e.detail === id) {
+        if (onToggle) {
+          onToggle(true);
+        } else {
+          setInternalOpen(true);
+        }
+      }
+    };
+    window.addEventListener('ctf-open-section', handleOpenSection);
+    return () => window.removeEventListener('ctf-open-section', handleOpenSection);
+  }, [id, onToggle]);
+
   const toggle = () => {
     if (onToggle) {
       onToggle(!isOpen);
@@ -47,11 +61,14 @@ export default function Accordion({
         </div>
       </button>
 
-      {isOpen && (
-        <div id={`accordion-content-${id}`} className="p-4 sm:p-6 text-black dark:text-neutral-100">
-          {children}
-        </div>
-      )}
+      {/* Body is kept in DOM with hidden attribute & print:block so it prints and aria-controls is valid */}
+      <div 
+        id={`accordion-content-${id}`} 
+        hidden={!isOpen}
+        className={`p-4 sm:p-6 text-black dark:text-neutral-100 ${!isOpen ? 'hidden print:block' : ''}`}
+      >
+        {children}
+      </div>
     </div>
   );
 }
