@@ -13,10 +13,16 @@ import Demo2Web from './pages/Demo2Web';
 import Demo3Forensics from './pages/Demo3Forensics';
 import LinuxBasics from './pages/LinuxBasics';
 import MiniCtfWrapUp from './pages/MiniCtfWrapUp';
+import InvestigationMethod from './pages/InvestigationMethod';
+import MethodExamples from './pages/MethodExamples';
+import WorksheetPage from './pages/WorksheetPage';
 
 const PAGE_TITLES = {
   '/': 'Overview & Schedule',
   '/before-you-start': 'Before You Start',
+  '/method': 'Investigation Method',
+  '/method-examples': 'Worked Examples',
+  '/worksheet': 'Investigation Worksheet',
   '/setup': 'Setup Guide',
   '/demo-1': 'Demo 1: Cryptography & Encoding',
   '/demo-2': 'Demo 2: Web Exploitation',
@@ -79,6 +85,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/before-you-start" element={<BeforeYouStart />} />
+            <Route path="/method" element={<InvestigationMethod />} />
+            <Route path="/method-examples" element={<MethodExamples />} />
+            <Route path="/worksheet" element={<WorksheetPage />} />
             <Route path="/setup" element={<Setup />} />
             <Route path="/demo-1" element={<Demo1Crypto />} />
             <Route path="/demo-2" element={<Demo2Web />} />

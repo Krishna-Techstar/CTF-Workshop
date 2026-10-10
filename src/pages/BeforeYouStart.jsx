@@ -149,7 +149,7 @@ export default function BeforeYouStart() {
 
       <PageNav
         prev={{ label: "Home Overview", path: "/" }}
-        next={{ label: "Setup (picoCTF, CyberChef, WSL)", path: "/setup" }}
+        next={{ label: "Investigation Method", path: "/method" }}
       />
     </div>
   );

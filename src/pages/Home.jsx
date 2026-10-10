@@ -20,6 +20,11 @@ export default function Home() {
           <Sticker color="pink" size="md" rotate={-1}>
             BY @KRISHNA
           </Sticker>
+          <Link to="/method" className="no-underline">
+            <Sticker color="dark" size="md" rotate={1} className="hover:scale-105 transition-transform">
+              🎯 LEARN THE 5-QUESTION METHOD
+            </Sticker>
+          </Link>
         </div>
 
         <h1 className="font-heading text-3xl sm:text-6xl text-black tracking-tight leading-none mb-4 uppercase">
@@ -42,6 +47,14 @@ export default function Home() {
           >
             <span>Start Workshop Guide</span>
             <ArrowRight className="w-5 h-5 ml-2 inline stroke-[3]" />
+          </Link>
+
+          <Link
+            to="/method"
+            className="brutal-btn bg-brutal-orange text-black hover:bg-white text-base sm:text-lg px-6 py-4 shadow-brutal flex items-center gap-2"
+          >
+            <span>Learn the 5-question method</span>
+            <span className="text-xl">🔍</span>
           </Link>
 
           <Link

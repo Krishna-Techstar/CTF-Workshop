@@ -3,7 +3,7 @@ export const SCHEDULE = [
     id: 'intro',
     timeRange: '0:00 to 0:20',
     title: 'Before You Start & Ethics',
-    description: 'Pre-workshop checks, equipment verification, legal ethics under IT Act 2000, and flag format standards.',
+    description: 'Pre-workshop checks, equipment verification, legal ethics under IT Act 2000, and flag format standards. Includes the 5-question Investigation Method.',
     route: '/before-you-start',
     durationMinutes: 20,
     accent: '#FFD93D', // Yellow

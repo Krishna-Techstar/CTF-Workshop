@@ -207,5 +207,82 @@ export const SEARCH_INDEX = [
     anchor: "troubleshooting-section",
     section: "Mini CTF",
     content: "command not found, permission denied, localhost:8765 down, CyberChef garbage, pasted flag rejected, steghide empty passphrase."
+  },
+
+  // Thinking Process
+  {
+    title: "Investigation Method: The 5-Question Loop",
+    path: "/method",
+    anchor: "the-loop",
+    section: "Thinking Process",
+    content: "The loop: 1. Asking, 2. Clues, 3. Hypothesis, 4. Test, 5. Learned. Repeat as rounds. Cycle back from test to clues."
+  },
+  {
+    title: "The Five Questions (Step by Step)",
+    path: "/method",
+    anchor: "five-steps",
+    section: "Thinking Process",
+    content: "Five steps: What is the challenge asking? What clues do you have? What is your hypothesis? What did you test? What did you learn?"
+  },
+  {
+    title: "How to Write a Good Hypothesis",
+    path: "/method",
+    anchor: "hypothesis-rules",
+    section: "Thinking Process",
+    content: "I think ___ because ___. If I am right, I will see ___. Observation, belief, prediction, way out. Weak vs strong hypothesis."
+  },
+  {
+    title: "Reading Your Test Results",
+    path: "/method",
+    anchor: "reading-results",
+    section: "Thinking Process",
+    content: "Supported (keep going), Refuted (ruled out, add new clue), Unclear (repeat with one change or second tool). Result badges."
+  },
+  {
+    title: "Six Rules of Mindset",
+    path: "/method",
+    anchor: "mindset",
+    section: "Thinking Process",
+    content: "Everything is a clue, try the simple thing first, predict before Enter, change one thing at a time, refuted is progress, write it down."
+  },
+  {
+    title: "Habits That Waste Time",
+    path: "/method",
+    anchor: "bad-habits",
+    section: "Thinking Process",
+    content: "Bad habits: tool spraying, skipping clues in step 2, falling in love with one theory, searching for the answer, not recording failures."
+  },
+  {
+    title: "The Stuck Ladder",
+    path: "/method",
+    anchor: "stuck-ladder",
+    section: "Thinking Process",
+    content: "Climb one rung: 0-2m re-read description, 2-5m find one new clue, 5-8m simpler hypothesis, 8-10m search concept, 10-12m explain to neighbour, >12m hint."
+  },
+  {
+    title: "Where to Start by Category",
+    path: "/method",
+    anchor: "by-category",
+    section: "Thinking Process",
+    content: "First clues and tools for Crypto, Web, Forensics, Linux. Encodings, page source, file headers, hidden files."
+  },
+  {
+    title: "Facilitator 5-Minute Script & Coach Questions",
+    path: "/method",
+    anchor: "facilitator-script",
+    section: "Thinking Process",
+    content: "Live walkthrough script, stopwatch, board notes, guiding questions to ask participants while walking around."
+  },
+  {
+    title: "Worked Examples: Step-by-Step Investigations",
+    path: "/method-examples",
+    section: "Thinking Process",
+    content: "Full worked examples with wrong turns: Base64, layered challenge, cookie tampering, hidden photo zip archive. Rounds timeline."
+  },
+  {
+    title: "Investigation Worksheet & Write-up Generator",
+    path: "/worksheet",
+    section: "Thinking Process",
+    content: "Interactive 5-question worksheet, autosave, stuck ladder dialog, load worked example, copy Markdown write-up, printable blank sheet."
   }
 ];

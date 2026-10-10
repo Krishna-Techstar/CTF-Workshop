@@ -216,6 +216,55 @@ export default function Sidebar({ onOpenSearch }) {
           </NavLink>
 
           <div className="pt-2 pb-1 px-1 text-[11px] font-mono font-black uppercase text-neutral-500 dark:text-neutral-400 tracking-wider">
+            Thinking Process
+          </div>
+
+          <NavLink
+            to="/method"
+            className={({ isActive }) =>
+              `flex items-center justify-between px-3 py-2.5 font-display font-bold text-xs uppercase tracking-wide border-2 border-black dark:border-white transition-all ${
+                isActive
+                  ? 'bg-brutal-orange text-black shadow-brutal-sm -translate-y-0.5'
+                  : 'bg-white dark:bg-neutral-900 text-black dark:text-white hover:bg-cream dark:hover:bg-neutral-800'
+              }`
+            }
+          >
+            <div className="flex items-center gap-2.5 truncate">
+              <span className="truncate">Investigation Method</span>
+            </div>
+          </NavLink>
+
+          <NavLink
+            to="/method-examples"
+            className={({ isActive }) =>
+              `flex items-center justify-between px-3 py-2.5 font-display font-bold text-xs uppercase tracking-wide border-2 border-black dark:border-white transition-all ${
+                isActive
+                  ? 'bg-brutal-purple text-black shadow-brutal-sm -translate-y-0.5'
+                  : 'bg-white dark:bg-neutral-900 text-black dark:text-white hover:bg-cream dark:hover:bg-neutral-800'
+              }`
+            }
+          >
+            <div className="flex items-center gap-2.5 truncate">
+              <span className="truncate">Worked Examples</span>
+            </div>
+          </NavLink>
+
+          <NavLink
+            to="/worksheet"
+            className={({ isActive }) =>
+              `flex items-center justify-between px-3 py-2.5 font-display font-bold text-xs uppercase tracking-wide border-2 border-black dark:border-white transition-all ${
+                isActive
+                  ? 'bg-brutal-green text-black shadow-brutal-sm -translate-y-0.5'
+                  : 'bg-white dark:bg-neutral-900 text-black dark:text-white hover:bg-cream dark:hover:bg-neutral-800'
+              }`
+            }
+          >
+            <div className="flex items-center gap-2.5 truncate">
+              <span className="truncate">Worksheet</span>
+            </div>
+          </NavLink>
+
+          <div className="pt-2 pb-1 px-1 text-[11px] font-mono font-black uppercase text-neutral-500 dark:text-neutral-400 tracking-wider">
             Hands-on Sections
           </div>
 

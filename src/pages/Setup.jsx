@@ -377,7 +377,7 @@ export default function Setup() {
       </Accordion>
 
       <PageNav
-        prev={{ label: "Before you start", path: "/before-you-start" }}
+        prev={{ label: "Worksheet", path: "/worksheet" }}
         next={{ label: "Demo 1: Crypto & encoding", path: "/demo-1" }}
       />
     </div>
