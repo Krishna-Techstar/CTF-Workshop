@@ -147,7 +147,8 @@
   aside,
   header,
   #workshop-timer-widget,
-  .print-hidden {
+  .print-hidden,
+  .print\:hidden {
     display: none !important;
   }
 
@@ -155,6 +156,21 @@
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .worksheet-print {
+    display: block !important;
+    width: 100% !important;
+    background: #FFF !important;
+    color: #000 !important;
+  }
+
+  .worksheet-ruled-line {
+    border-bottom: 1px solid #777;
+    height: 28px;
+    width: 100%;
+    margin-bottom: 6px;
   }
 
   .brutal-card,
