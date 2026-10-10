@@ -1,0 +1,55 @@
+<!--
+===================================================================================
+CTF WORKSHOP: DETAILED STEP-BY-STEP GUIDE - INTERACTIVE DOCUMENTATION WEBSITE
+===================================================================================
+Author: @Krishna | CTF Workshop Guide
+Design Style: Neobrutalism (High contrast, hard shadows, vibrant accents, bold type)
+Stack: React + Vite + Tailwind CSS + react-router-dom (HashRouter)
+
+HOW TO EDIT CONTENT:
+1. Workshop Sections: Edit or extend markdown/data files in `src/content/`:
+   - `beforeYouStart.js` -> Intro, checklist, ethics, flag formats.
+   - `setup.js`          -> picoCTF, CyberChef, WSL instructions & troubleshooting.
+   - `demo1Crypto.js`    -> Encoding vs Encryption vs Hashing, Base64, ROT13, Hex, Layered.
+   - `demo2Web.js`       -> Web basics, DevTools tabs, Cookie editing, robots.txt, curl.
+   - `demo3Forensics.js` -> Magic numbers, file carving, ExifTool, Binwalk, Steghide stepper.
+   - `linuxBasics.js`    -> Terminal basics, 6 core commands, helpers, Bandit wargame.
+   - `miniCtf.js`        -> Mini CTF rules, writeup template, cheat sheet, troubleshooting.
+2. Interactive Challenges & Flags:
+   - All flags are registered in `src/utils/flags.js` (hashed with SHA-256 for secure client verification).
+   - CyberChef Playground logic lives in `src/components/Playground.jsx`.
+   - Flag Checker widget lives in `src/components/FlagChecker.jsx`.
+   - Schedule & Timer intervals are defined in `src/content/schedule.js`.
+
+HOW TO HOST & DEPLOY:
+- Local Development:
+    npm install
+    npm run dev
+- Production Build:
+    npm run build
+- GitHub Pages Deployment:
+    1. The project uses HashRouter (#/...) and `base: './'` in `vite.config.js`.
+    2. Run `npm run build` to generate the `dist` folder.
+    3. Push the `dist` folder to your `gh-pages` branch or configure GitHub Actions.
+- Netlify / Vercel:
+    Deploy the repository directly. Set Build Command to `npm run build` and Publish Directory to `dist`.
+===================================================================================
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚩</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CTF Workshop: Detailed Step-by-Step Guide</title>
+    <meta name="description" content="Complete, interactive neobrutalist documentation guide for beginner CTF workshop. Covers Crypto, Web, Forensics, Linux, Bandit, and PicoCTF." />
+    <!-- Google Fonts: Space Grotesk, Archivo Black, JetBrains Mono, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-cream dark:bg-brutal-dark text-black dark:text-white transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

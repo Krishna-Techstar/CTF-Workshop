@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cream dark:bg-brutal-dark text-black dark:text-neutral-100 font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-black dark:text-white;
+  }
+}
+
+/* Neobrutalism UI Utilities */
+@layer components {
+  .brutal-card {
+    @apply border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark transition-shadow duration-150;
+    box-shadow: 5px 5px 0px #000;
+  }
+
+  .dark .brutal-card {
+    box-shadow: 5px 5px 0px #FFF;
+  }
+
+  .brutal-card-yellow {
+    @apply border-3 border-black dark:border-white bg-brutal-yellow transition-shadow duration-150 text-black;
+    box-shadow: 5px 5px 0px #000;
+  }
+
+  .brutal-btn {
+    @apply inline-flex items-center justify-center font-display font-bold uppercase tracking-wider text-sm px-4 py-2.5 border-3 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white select-none transition-all duration-100;
+    box-shadow: 4px 4px 0px #000;
+  }
+
+  .dark .brutal-btn {
+    box-shadow: 4px 4px 0px #FFF;
+  }
+
+  .brutal-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+  }
+
+  .dark .brutal-btn:hover {
+    box-shadow: 2px 2px 0px #FFF;
+  }
+
+  .brutal-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #000;
+  }
+
+  .dark .brutal-btn:active {
+    box-shadow: 0px 0px 0px #FFF;
+  }
+
+  .brutal-input {
+    @apply border-3 border-black dark:border-white bg-white dark:bg-neutral-900 px-3 py-2 text-black dark:text-white font-mono focus:outline-none focus:ring-4 focus:ring-brutal-yellow;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .dark .brutal-input {
+    box-shadow: 3px 3px 0px #FFF;
+  }
+
+  .brutal-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 font-display font-bold text-xs uppercase tracking-wider border-2 border-black dark:border-white text-black;
+    box-shadow: 2px 2px 0px #000;
+  }
+
+  .dark .brutal-badge {
+    box-shadow: 2px 2px 0px #FFF;
+  }
+}
+
+/* Shake animation for incorrect flag submission */
+@keyframes brutal-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.animate-shake {
+  animation: brutal-shake 0.4s ease-in-out;
+}
+
+/* Page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  .page-fade-in {
+    animation: brutalPop 0.18s cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes brutalPop {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ebd8;
+  border-left: 2px solid #000;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-left: 2px solid #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFD93D;
+  border: 2px solid #000;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #FFD93D;
+  border: 2px solid #fff;
+}
+
+/* Print Stylesheet */
+@media print {
+  body {
+    background: #FFF !important;
+    color: #000 !important;
+  }
+
+  .no-print,
+  nav,
+  aside,
+  header,
+  #workshop-timer-widget,
+  .print-hidden {
+    display: none !important;
+  }
+
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .brutal-card,
+  .brutal-btn,
+  .brutal-badge,
+  .brutal-input {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+    page-break-inside: avoid;
+  }
+
+  a {
+    text-decoration: underline !important;
+    color: #000 !important;
+  }
+}
