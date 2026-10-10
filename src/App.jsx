@@ -14,12 +14,34 @@ import Demo3Forensics from './pages/Demo3Forensics';
 import LinuxBasics from './pages/LinuxBasics';
 import MiniCtfWrapUp from './pages/MiniCtfWrapUp';
 
+const PAGE_TITLES = {
+  '/': 'Overview & Schedule',
+  '/before-you-start': 'Before You Start',
+  '/setup': 'Setup Guide',
+  '/demo-1': 'Demo 1: Cryptography & Encoding',
+  '/demo-2': 'Demo 2: Web Exploitation',
+  '/break-and-demo-3': 'Break & Demo 3: Forensics & Steganography',
+  '/linux-basics': 'Linux Basics & Bandit',
+  '/mini-ctf': 'Mini CTF & Wrap-up'
+};
+
 export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
 
-  // Scroll to anchor or top on route change
+  // Scroll to anchor or top, set document title, and focus h1 on route change
   useEffect(() => {
+    const pageTitle = PAGE_TITLES[location.pathname] || 'Guide';
+    document.title = `${pageTitle} | CTF Workshop`;
+
+    setTimeout(() => {
+      const h1 = document.querySelector('main h1');
+      if (h1) {
+        h1.setAttribute('tabindex', '-1');
+        h1.focus({ preventScroll: true });
+      }
+    }, 50);
+
     const anchor = location.state?.anchor;
     if (anchor) {
       window.dispatchEvent(new CustomEvent('ctf-open-section', { detail: anchor }));

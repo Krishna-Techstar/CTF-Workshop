@@ -134,7 +134,7 @@ export default function FlagChecker() {
 
       {/* Feedback Messages */}
       {status === 'success' && feedback && (
-        <div className="mb-5 p-4 border-3 border-black bg-brutal-green text-black shadow-brutal flex items-center justify-between flex-wrap gap-2">
+        <div role="status" aria-live="polite" className="mb-5 p-4 border-3 border-black bg-brutal-green text-black shadow-brutal flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-5 h-5 stroke-[2.5]" />
             <span className="font-heading text-base">
@@ -151,7 +151,7 @@ export default function FlagChecker() {
       )}
 
       {status === 'error' && (
-        <div className="mb-5 p-3.5 border-3 border-black bg-red-400 text-black shadow-brutal flex items-center gap-2">
+        <div role="alert" className="mb-5 p-3.5 border-3 border-black bg-red-400 text-black shadow-brutal flex items-center gap-2">
           <AlertCircle className="w-5 h-5 stroke-[2.5]" />
           <span className="font-heading text-sm">
             {feedback?.message || 'Incorrect flag! Please check formatting and try again.'}

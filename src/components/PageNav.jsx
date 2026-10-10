@@ -8,8 +8,9 @@ export default function PageNav({ prev, next }) {
   // Keyboard navigation for Left and Right arrow keys
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Don't trigger if user is typing in an input or textarea
-      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      const active = document.activeElement;
+      const isAllowed = !active || active === document.body || active.tagName.toLowerCase() === 'main';
+      if (!isAllowed) return;
 
       if (e.key === 'ArrowLeft' && prev) {
         navigate(prev.path);

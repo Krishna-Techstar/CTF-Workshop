@@ -1,23 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Terminal, 
-  ShieldCheck, 
-  Clock, 
-  Flag, 
-  Play, 
-  CheckSquare, 
-  ArrowRight, 
-  Sparkles,
-  BookOpen,
-  Award
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import Sticker from '../components/Sticker';
+import PageNav from '../components/PageNav';
 import { SCHEDULE } from '../content/schedule';
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
     <div className="max-w-6xl mx-auto page-fade-in pb-16">
       {/* Hero Banner */}
@@ -58,44 +46,39 @@ export default function Home() {
 
           <Link
             to="/mini-ctf"
-            className="brutal-btn bg-white text-black hover:bg-brutal-green text-sm sm:text-base px-6 py-4 shadow-brutal"
+            className="brutal-btn bg-white text-black hover:bg-brutal-green text-base sm:text-lg px-6 py-4 shadow-brutal"
           >
-            <Flag className="w-4 h-4 mr-2 inline stroke-[3]" />
-            <span>Interactive Flag Checker</span>
+            Jump to Mini CTF & Flag Checker 🚩
           </Link>
         </div>
       </div>
 
-      {/* Workshop Stats Badges */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
-        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal dark:shadow-brutal-dark text-center">
-          <Clock className="w-6 h-6 mx-auto mb-1 text-brutal-blue" />
-          <div className="font-heading text-2xl text-black dark:text-white">3.5 HRS</div>
-          <div className="text-xs font-mono font-bold uppercase text-neutral-500">0:00 to 3:30</div>
+      {/* Workshop Quick Stats Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal text-center">
+          <div className="font-heading text-3xl sm:text-4xl text-black dark:text-white">3.5 hrs</div>
+          <div className="text-xs font-mono font-bold uppercase text-neutral-600 dark:text-neutral-400 mt-1">Total Duration</div>
         </div>
-        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal dark:shadow-brutal-dark text-center">
-          <BookOpen className="w-6 h-6 mx-auto mb-1 text-brutal-pink" />
-          <div className="font-heading text-2xl text-black dark:text-white">7 UNITS</div>
-          <div className="text-xs font-mono font-bold uppercase text-neutral-500">Step-by-Step</div>
+        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal text-center">
+          <div className="font-heading text-3xl sm:text-4xl text-black dark:text-white">4 Domains</div>
+          <div className="text-xs font-mono font-bold uppercase text-neutral-600 dark:text-neutral-400 mt-1">Crypto, Web, Forensics, Linux</div>
         </div>
-        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal dark:shadow-brutal-dark text-center">
-          <Flag className="w-6 h-6 mx-auto mb-1 text-brutal-green" />
-          <div className="font-heading text-2xl text-black dark:text-white">13 FLAGS</div>
-          <div className="text-xs font-mono font-bold uppercase text-neutral-500">Hidden Treasures</div>
+        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal text-center">
+          <div className="font-heading text-3xl sm:text-4xl text-black dark:text-white">13 Flags</div>
+          <div className="text-xs font-mono font-bold uppercase text-neutral-600 dark:text-neutral-400 mt-1">Real-time Verified</div>
         </div>
-        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal dark:shadow-brutal-dark text-center">
-          <ShieldCheck className="w-6 h-6 mx-auto mb-1 text-brutal-orange" />
-          <div className="font-heading text-2xl text-black dark:text-white">100% FREE</div>
-          <div className="text-xs font-mono font-bold uppercase text-neutral-500">Open-Source Tools</div>
+        <div className="p-4 border-3 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal text-center">
+          <div className="font-heading text-3xl sm:text-4xl text-black dark:text-white">100% Free</div>
+          <div className="text-xs font-mono font-bold uppercase text-neutral-600 dark:text-neutral-400 mt-1">Open-Source Tooling</div>
         </div>
       </div>
 
-      {/* Schedule Grid: Clickable Cards (0:00 to 3:30) */}
-      <div className="mb-14">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
+      {/* Workshop Schedule & Navigation Matrix */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
           <div>
-            <h2 className="font-heading text-2xl sm:text-3xl m-0 text-black dark:text-white">
-              Full Workshop Schedule
+            <h2 className="font-heading text-2xl sm:text-3xl text-black dark:text-white uppercase tracking-tight m-0">
+              Workshop Schedule & Syllabus
             </h2>
             <p className="text-sm font-mono text-neutral-600 dark:text-neutral-400 mt-1">
               Click any schedule block to jump directly to its complete lesson & hands-on materials.
@@ -144,7 +127,7 @@ export default function Home() {
                 <span className="text-xs font-mono font-bold uppercase text-neutral-600 dark:text-neutral-400">
                   Open Section
                 </span>
-                <span className="p-1 border border-black bg-brutal-yellow text-black group-hover:translate-x-1 transition-transform">
+                <span className="p-1 border border-black bg-brutal-yellow text-black motion-safe:group-hover:translate-x-1 transition-transform">
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -180,6 +163,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <PageNav next={{ label: "Before you start", path: "/before-you-start" }} />
     </div>
   );
 }

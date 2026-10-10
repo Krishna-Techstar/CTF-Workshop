@@ -115,7 +115,7 @@ export default function CodeBlock({ code, language = 'bash', title = '' }) {
           ) : copyFailed ? (
             <>
               <AlertCircle className="w-3.5 h-3.5" />
-              <span>Copy failed, select text manually</span>
+              <span>Copy failed, select the text manually</span>
             </>
           ) : (
             <>

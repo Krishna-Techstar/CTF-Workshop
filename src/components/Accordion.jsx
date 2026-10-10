@@ -46,7 +46,7 @@ export default function Accordion({
         onClick={toggle}
         aria-expanded={isOpen}
         aria-controls={`accordion-content-${id}`}
-        className="w-full flex items-center justify-between p-4 text-left font-display font-bold text-lg sm:text-xl border-b-3 border-black dark:border-white bg-cream dark:bg-neutral-800 text-black dark:text-white hover:bg-brutal-yellow dark:hover:bg-neutral-700 transition-colors select-none focus:outline-none focus:ring-4 focus:ring-brutal-pink"
+        className="w-full flex items-center justify-between p-4 text-left font-display font-bold text-lg sm:text-xl border-b-3 border-black dark:border-white bg-cream dark:bg-neutral-800 text-black dark:text-white hover:bg-brutal-yellow dark:hover:bg-neutral-700 transition-colors select-none"
       >
         <div className="flex items-center gap-3 flex-wrap">
           {badge && (

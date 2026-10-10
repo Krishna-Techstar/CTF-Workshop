@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Check, CheckCircle2 } from 'lucide-react';
 import { getStorageItem, setStorageItem } from '../utils/storage';
+import RichText from './RichText';
 
 export default function TaskList({ 
   id, 
@@ -55,12 +56,15 @@ export default function TaskList({
                   : 'hover:bg-cream dark:hover:bg-neutral-800/60 text-black dark:text-neutral-100'
               }`}
             >
+              <input
+                type="checkbox"
+                checked={isDone}
+                onChange={() => toggleTask(idx)}
+                className="peer sr-only"
+              />
               <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleTask(idx);
-                }}
-                className={`w-6 h-6 shrink-0 mt-0.5 border-2 border-black dark:border-white flex items-center justify-center transition-all ${
+                aria-hidden="true"
+                className={`w-6 h-6 shrink-0 mt-0.5 border-2 border-black dark:border-white flex items-center justify-center transition-all peer-focus-visible:ring-4 peer-focus-visible:ring-black dark:peer-focus-visible:ring-brutal-yellow peer-focus-visible:ring-offset-2 ${
                   isDone 
                     ? 'bg-brutal-green text-black shadow-[1px_1px_0px_#000]' 
                     : 'bg-white dark:bg-neutral-900 shadow-[2px_2px_0px_#000] hover:bg-brutal-yellow'
@@ -69,7 +73,7 @@ export default function TaskList({
                 {isDone && <Check className="w-4 h-4 stroke-[3]" />}
               </div>
               <span className="text-sm sm:text-base leading-snug font-medium">
-                {task}
+                <RichText text={task} />
               </span>
             </label>
           );

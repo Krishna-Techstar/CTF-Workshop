@@ -40,6 +40,8 @@ export default function Playground() {
   const decodeHex = (str) => {
     try {
       const cleaned = str.replace(/\s+/g, '');
+      if (!cleaned) return '';
+      if (!/^[0-9a-fA-F]+$/.test(cleaned)) return '[Hex Decode Error]';
       if (cleaned.length % 2 !== 0) return '[Hex Error: Odd length]';
       let result = '';
       for (let i = 0; i < cleaned.length; i += 2) {
@@ -57,6 +59,17 @@ export default function Playground() {
       result += str.charCodeAt(i).toString(16).padStart(2, '0');
     }
     return result;
+  };
+
+  // Helper to test if a result is meaningful and not error/garbage/NUL
+  const isValidMagicResult = (text) => {
+    if (!text || typeof text !== 'string') return false;
+    const trimmed = text.trim();
+    if (!trimmed) return false;
+    if (trimmed.startsWith('[')) return false;
+    // Skip strings containing NUL characters or control codes
+    if (/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(text)) return false;
+    return true;
   };
 
   // Run a single direct transformation
@@ -80,7 +93,7 @@ export default function Playground() {
     // Attempt 1: Direct ROT13 shifts
     for (let s = 1; s <= 25; s++) {
       const shifted = rot13(raw, s);
-      if (shifted.toLowerCase().includes('flag{')) {
+      if (isValidMagicResult(shifted) && shifted.toLowerCase().includes('flag{')) {
         attempts.push({
           recipe: `ROT${s} (Caesar shift ${s})`,
           result: shifted,
@@ -91,7 +104,7 @@ export default function Playground() {
 
     // Attempt 2: Base64
     const b64 = decodeBase64(raw);
-    if (!b64.startsWith('[Base64')) {
+    if (isValidMagicResult(b64)) {
       attempts.push({
         recipe: 'From Base64',
         result: b64,
@@ -101,7 +114,7 @@ export default function Playground() {
 
     // Attempt 3: Hex
     const hex = decodeHex(raw);
-    if (!hex.startsWith('[Hex')) {
+    if (isValidMagicResult(hex)) {
       attempts.push({
         recipe: 'From Hex',
         result: hex,
@@ -110,7 +123,7 @@ export default function Playground() {
 
       // Layered 1: Hex -> Base64
       const hexB64 = decodeBase64(hex);
-      if (!hexB64.startsWith('[Base64')) {
+      if (isValidMagicResult(hexB64)) {
         attempts.push({
           recipe: 'From Hex → From Base64',
           result: hexB64,
@@ -119,16 +132,18 @@ export default function Playground() {
 
         // Layered 2: Hex -> Base64 -> ROT13
         const hexB64Rot = rot13(hexB64, 13);
-        attempts.push({
-          recipe: 'From Hex → From Base64 → ROT13',
-          result: hexB64Rot,
-          foundFlag: hexB64Rot.toLowerCase().includes('flag{'),
-        });
+        if (isValidMagicResult(hexB64Rot)) {
+          attempts.push({
+            recipe: 'From Hex → From Base64 → ROT13',
+            result: hexB64Rot,
+            foundFlag: hexB64Rot.toLowerCase().includes('flag{'),
+          });
+        }
       }
 
       // Layered 3: Hex -> ROT13
       const hexRot = rot13(hex, 13);
-      if (hexRot.toLowerCase().includes('flag{')) {
+      if (isValidMagicResult(hexRot) && hexRot.toLowerCase().includes('flag{')) {
         attempts.push({
           recipe: 'From Hex → ROT13',
           result: hexRot,
@@ -138,9 +153,9 @@ export default function Playground() {
     }
 
     // Attempt 4: Base64 -> ROT13
-    if (!b64.startsWith('[Base64')) {
+    if (isValidMagicResult(b64)) {
       const b64Rot = rot13(b64, 13);
-      if (b64Rot.toLowerCase().includes('flag{')) {
+      if (isValidMagicResult(b64Rot) && b64Rot.toLowerCase().includes('flag{')) {
         attempts.push({
           recipe: 'From Base64 → ROT13',
           result: b64Rot,
@@ -150,8 +165,9 @@ export default function Playground() {
     }
 
     const matched = attempts.filter(a => a.foundFlag);
+    const validAttempts = attempts.filter(a => isValidMagicResult(a.result));
     setMagicResults({
-      matched: matched.length > 0 ? matched : attempts.slice(0, 4),
+      matched: matched.length > 0 ? matched : validAttempts.slice(0, 4),
       hasFlag: matched.length > 0,
     });
 

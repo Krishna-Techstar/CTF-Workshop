@@ -2,45 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { 
   Home, 
-  Terminal, 
-  Lock, 
-  Globe, 
   Search as SearchIcon, 
-  FileCode, 
-  Flag, 
-  Compass, 
   Sun, 
   Moon, 
   Printer, 
   Menu, 
   X, 
-  CheckCircle2, 
-  ShieldAlert 
+  CheckCircle2
 } from 'lucide-react';
 import { NAV_SECTIONS } from '../content/schedule';
-import { getStorageItem } from '../utils/storage';
+import { getStorageItem, setStorageItem } from '../utils/storage';
 import Sticker from './Sticker';
 
 export default function Sidebar({ onOpenSearch }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  );
+  
   const [isDark, setIsDark] = useState(() => {
-    return document.documentElement.classList.contains('dark') || 
-      getStorageItem('ctf_theme', 'light') === 'dark';
+    const saved = getStorageItem('ctf_theme', null);
+    if (saved) return saved === 'dark';
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
   });
+
   const [completionPercentage, setCompletionPercentage] = useState(0);
   const location = useLocation();
+
+  // Track viewport width for accessibility / inert attribute
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 1023px)');
+    const onChange = (e) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
 
   // Close mobile sidebar on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Handle dark mode toggle
+  // Handle dark mode toggle & persistence
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
+      setStorageItem('ctf_theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      setStorageItem('ctf_theme', 'light');
     }
   }, [isDark]);
 
@@ -83,6 +97,8 @@ export default function Sidebar({ onOpenSearch }) {
     };
   }, []);
 
+  const isHiddenOffCanvas = isMobile && !mobileOpen;
+
   return (
     <>
       {/* Mobile Top Navbar with Hamburger */}
@@ -120,6 +136,8 @@ export default function Sidebar({ onOpenSearch }) {
 
       {/* Main Sidebar Component */}
       <aside
+        inert={isHiddenOffCanvas ? "" : undefined}
+        aria-hidden={isHiddenOffCanvas ? true : undefined}
         className={`fixed top-0 bottom-0 left-0 z-40 w-72 sm:w-80 border-r-4 border-black dark:border-white bg-white dark:bg-brutal-cardDark transition-transform duration-200 ease-in-out flex flex-col print:hidden ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
@@ -150,7 +168,7 @@ export default function Sidebar({ onOpenSearch }) {
                 <CheckCircle2 className="w-3.5 h-3.5 text-brutal-green" />
                 Workshop Progress
               </span>
-              <span className="px-1.5 py-0.2 bg-brutal-yellow text-black border border-black">
+              <span className="px-1.5 py-0.5 bg-brutal-yellow text-black border border-black">
                 {completionPercentage}%
               </span>
             </div>

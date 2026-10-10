@@ -1,51 +1,95 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, Clock, Minimize2, Maximize2, AlertTriangle } from 'lucide-react';
 import { SCHEDULE } from '../content/schedule';
-import Sticker from './Sticker';
+import { getStorageItem, setStorageItem } from '../utils/storage';
 
 export default function WorkshopTimer() {
-  const [currentSegmentIdx, setCurrentSegmentIdx] = useState(0);
+  const [currentSegmentIdx, setCurrentSegmentIdx] = useState(() => {
+    const saved = getStorageItem('ctf_timer_segment', 0);
+    return typeof saved === 'number' && saved >= 0 && saved < SCHEDULE.length ? saved : 0;
+  });
+
   const [isRunning, setIsRunning] = useState(false);
-  const [secondsRemaining, setSecondsRemaining] = useState(SCHEDULE[0].durationMinutes * 60);
+  
+  const [secondsRemaining, setSecondsRemaining] = useState(() => {
+    const saved = getStorageItem('ctf_timer_remaining', null);
+    if (typeof saved === 'number' && saved >= 0) return saved;
+    const segIdx = getStorageItem('ctf_timer_segment', 0);
+    const validIdx = typeof segIdx === 'number' && segIdx >= 0 && segIdx < SCHEDULE.length ? segIdx : 0;
+    return SCHEDULE[validIdx].durationMinutes * 60;
+  });
+
   const [isMinimized, setIsMinimized] = useState(false);
+  const endTimeRef = useRef(null);
 
-  const segment = SCHEDULE[currentSegmentIdx];
+  const segment = SCHEDULE[currentSegmentIdx] || SCHEDULE[0];
 
-  // Update timer whenever segment index changes
+  // Save state on segment change
   useEffect(() => {
-    setIsRunning(false);
-    setSecondsRemaining(SCHEDULE[currentSegmentIdx].durationMinutes * 60);
+    setStorageItem('ctf_timer_segment', currentSegmentIdx);
   }, [currentSegmentIdx]);
 
-  // Interval ticker
+  // Save remaining seconds
+  useEffect(() => {
+    setStorageItem('ctf_timer_remaining', secondsRemaining);
+  }, [secondsRemaining]);
+
+  // Accurate interval ticker using target end timestamp
   useEffect(() => {
     let interval = null;
-    if (isRunning && secondsRemaining > 0) {
+    if (isRunning) {
+      endTimeRef.current = Date.now() + secondsRemaining * 1000;
       interval = setInterval(() => {
-        setSecondsRemaining(prev => prev - 1);
-      }, 1000);
-    } else if (secondsRemaining === 0) {
-      setIsRunning(false);
+        const remainingMs = endTimeRef.current - Date.now();
+        const remSec = Math.max(0, Math.ceil(remainingMs / 1000));
+        setSecondsRemaining(remSec);
+        if (remSec <= 0) {
+          setIsRunning(false);
+          clearInterval(interval);
+        }
+      }, 250);
     }
-    return () => clearInterval(interval);
-  }, [isRunning, secondsRemaining]);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRunning]);
 
-  const toggleRun = () => setIsRunning(!isRunning);
+  const toggleRun = () => {
+    if (!isRunning && secondsRemaining === 0) {
+      // If time was 0, reset before starting
+      const freshSec = segment.durationMinutes * 60;
+      setSecondsRemaining(freshSec);
+      endTimeRef.current = Date.now() + freshSec * 1000;
+    }
+    setIsRunning(prev => !prev);
+  };
 
   const resetCurrent = () => {
     setIsRunning(false);
-    setSecondsRemaining(segment.durationMinutes * 60);
+    const initialSec = segment.durationMinutes * 60;
+    setSecondsRemaining(initialSec);
+    setStorageItem('ctf_timer_remaining', initialSec);
   };
 
   const nextSegment = () => {
     if (currentSegmentIdx < SCHEDULE.length - 1) {
-      setCurrentSegmentIdx(prev => prev + 1);
+      setIsRunning(false);
+      const nextIdx = currentSegmentIdx + 1;
+      setCurrentSegmentIdx(nextIdx);
+      const nextSec = SCHEDULE[nextIdx].durationMinutes * 60;
+      setSecondsRemaining(nextSec);
+      setStorageItem('ctf_timer_remaining', nextSec);
     }
   };
 
   const prevSegment = () => {
     if (currentSegmentIdx > 0) {
-      setCurrentSegmentIdx(prev => prev - 1);
+      setIsRunning(false);
+      const prevIdx = currentSegmentIdx - 1;
+      setCurrentSegmentIdx(prevIdx);
+      const prevSec = SCHEDULE[prevIdx].durationMinutes * 60;
+      setSecondsRemaining(prevSec);
+      setStorageItem('ctf_timer_remaining', prevSec);
     }
   };
 
@@ -53,6 +97,47 @@ export default function WorkshopTimer() {
   const seconds = secondsRemaining % 60;
   const isWarning = secondsRemaining > 0 && secondsRemaining <= 120; // 2 minutes remaining
   const isTimeUp = secondsRemaining === 0;
+
+  // Title flash and short beep when time is up
+  useEffect(() => {
+    if (isTimeUp && !isRunning) {
+      // Audio beep
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.35);
+        }
+      } catch (e) {}
+
+      // Title flash
+      const origTitle = document.title;
+      let flashState = false;
+      const interval = setInterval(() => {
+        document.title = flashState ? '⏰ TIME IS UP!' : origTitle;
+        flashState = !flashState;
+      }, 750);
+
+      const timeout = setTimeout(() => {
+        clearInterval(interval);
+        document.title = origTitle;
+      }, 6000);
+
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+        document.title = origTitle;
+      };
+    }
+  }, [isTimeUp]);
 
   // Format time MM:SS
   const timeFormatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
@@ -66,18 +151,18 @@ export default function WorkshopTimer() {
         <button
           onClick={() => setIsMinimized(false)}
           className={`flex items-center gap-2.5 px-3.5 py-2 border-3 border-black dark:border-white shadow-brutal dark:shadow-brutal-dark text-black font-display font-black text-sm tracking-wide ${
-            isWarning ? 'bg-red-400 animate-pulse' : isRunning ? 'bg-brutal-green' : 'bg-brutal-yellow'
+            isWarning ? 'bg-red-400 motion-safe:animate-pulse' : isRunning ? 'bg-brutal-green' : 'bg-brutal-yellow'
           }`}
         >
           <Clock className="w-4 h-4" />
-          <span>{timeFormatted}</span>
+          <span role="timer" aria-live="polite">{timeFormatted}</span>
           <span className="text-xs uppercase opacity-80">({segment.timeRange})</span>
           <Maximize2 className="w-3.5 h-3.5 ml-1" />
         </button>
       ) : (
         <div
           className={`w-72 sm:w-80 border-4 border-black dark:border-white bg-white dark:bg-brutal-cardDark shadow-brutal-lg dark:shadow-brutal-dark-lg transition-all ${
-            isWarning ? 'ring-4 ring-red-500 animate-pulse' : ''
+            isWarning ? 'ring-4 ring-red-500 motion-safe:animate-pulse' : ''
           }`}
         >
           {/* Header */}
@@ -115,9 +200,11 @@ export default function WorkshopTimer() {
           {/* Countdown Clock Display */}
           <div className="p-4 text-center bg-white dark:bg-neutral-900">
             <div
+              role="timer"
+              aria-live="polite"
               className={`font-mono text-4xl sm:text-5xl font-black tracking-tight mb-1 ${
                 isTimeUp 
-                  ? 'text-red-600 animate-bounce' 
+                  ? 'text-red-600 motion-safe:animate-bounce' 
                   : isWarning 
                   ? 'text-red-500' 
                   : 'text-black dark:text-white'
